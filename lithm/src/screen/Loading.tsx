@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 const Loading = () => {
     return (
         <ImageBackground
-        source={require('../img/Loading_sample.png')}
+        source={require('../img/loading_sample.png')}
         style={{flex:1}}>
         </ImageBackground>   
     );
