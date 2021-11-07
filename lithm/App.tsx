@@ -23,21 +23,17 @@ export default class extends React.Component { //class로 바꾼모습 뉘신지
     if(this.state.isLoading){
       return <Loading></Loading>
     }else{
-      return( <SafeAreaView>
-        <AuthScreen></AuthScreen>
-        </SafeAreaView>)
-
-      /*const Stack = createStackNavigator();
+      const Stack = createStackNavigator();
       return (
         <NavigationContainer>
           <SafeAreaView style={styles.safeAreaView}>
-                <Stack.Navigator initialRouteName="NoStudy">
+                <Stack.Navigator initialRouteName="AuthScreen">
+                  <Stack.Screen name="AuthScreen" component={AuthScreen}/>
                   <Stack.Screen name="NoStudy" component={NoStudy}/>
                   <Stack.Screen name="MakeStudy" component={MakeStudy}/>
                 </Stack.Navigator>
           </SafeAreaView>
         </NavigationContainer>)
-  */
     }
 
   }
