@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet,SafeAreaView, TouchableOpacity, TextInput, Platform } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import NoStudy from './NoStudy';
 import MakeStudy from './MakeStudy';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
@@ -32,6 +35,7 @@ const AuthScreen = () => {
                 const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
                 if (res.status === 200) {  //Auth.js 에서 넘겨준 status
                     setMessage(jsonRes.message);
+                    return afterLogin();
                 }
             } catch (err) {
                 console.log(err);
@@ -80,8 +84,7 @@ const AuthScreen = () => {
         const status = isError ? `Error: ` : `Success: `;
         return status + message;
     }
-
-    return (
+    return(
         //<ImageBackground source={require('../public/images/gradient-back.jpeg')} style={styles.image}>
             <View style={styles.card}>
                 <Text style={styles.heading}>{isLogin ? 'Log into \nYour account' : 'Signup'}</Text>
@@ -104,7 +107,16 @@ const AuthScreen = () => {
         //</ImageBackground>
     );
 };
-
+const afterLogin=()=>{
+    const Stack = createStackNavigator();
+    return (
+        <NavigationContainer>
+                <Stack.Navigator initialRouteName="NoStudy">
+                  <Stack.Screen name="NoStudy" component={NoStudy}/>
+                  <Stack.Screen name="MakeStudy" component={MakeStudy}/>
+                </Stack.Navigator>
+        </NavigationContainer>)
+}
 const styles = StyleSheet.create({
     image: {
         flex: 1,
