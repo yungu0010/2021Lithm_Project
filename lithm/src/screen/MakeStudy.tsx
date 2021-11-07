@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform } from "react-native";
-import { render } from 'react-dom';
 import NumericInput from 'react-native-numeric-input'
 
 
@@ -10,9 +9,10 @@ const MakeStudy = () => {
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState('');
     const [title, setTitle] = useState('');
-    const [solve, setSolve] = useState('1');
+    const [solve, setSolve] = useState(1);
     const [day, setDay] = useState('Sunday');
     const [penalty, setPenalty] = useState('');
+
     const onSubmitHandler = () => {
         const payload = {
             title,

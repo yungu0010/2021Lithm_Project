@@ -19,10 +19,7 @@ export default class extends React.Component { //class로 바꾼모습
     }else{
       return (
         <SafeAreaView style={styles.safeAreaView}>
-              <AuthScreen/>
-            
-          
-          
+              <AuthScreen/>    
         </SafeAreaView>)
     }
 

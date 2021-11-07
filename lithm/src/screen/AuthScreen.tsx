@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
+import MakeStudy from './MakeStudy';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
@@ -31,7 +32,6 @@ const AuthScreen = () => {
                 const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
                 if (res.status === 200) {  //Auth.js 에서 넘겨준 status
                     setMessage(jsonRes.message);
-                    //navigation.navigate('NoStudy')
                 }
             } catch (err) {
                 console.log(err);
