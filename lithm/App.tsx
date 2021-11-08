@@ -6,6 +6,8 @@ import NoStudy from './src/screen/NoStudy';
 import MakeStudy from './src/screen/MakeStudy';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
+// import { createDrawerNavigator } from 'react-navigation-drawer';
+// import DrawerBar from './src/navigations/SideMenu';
 
 
 export default class extends React.Component { //class로 바꾼모습 뉘신지..?

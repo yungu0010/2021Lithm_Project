@@ -2,7 +2,6 @@ const bcryptjs = require('bcryptjs');
 
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const cookieParser = require("cookie-parser");
 
 const signup = (req, res, next) => { //회원가입
     // checks if email already exists
@@ -56,12 +55,10 @@ const login = (req, res, next) => {//토큰 생성해서 client에게 보냄
             // password hash
             bcryptjs.compare(req.body.password, dbUser.user_pw, (err, compareRes) => {
                 if (err) { // error while comparing
-                    res.status(502).json({message: "We got a wrong password"}); 
+                    return res.status(502).json({message: "We got a wrong password"}); 
                 } else if (compareRes) { // password match(성공), 로그인하면 1시간 동안 유지
                     const token = jwt.sign({userId:dbUser.id}, 'secret', {expiresIn: '7d'});
-                    //res.cookie('dbUser',token);
-                    res
-                        .cookie("user",token,{maxAge: 1000 * 60 * 60 * 24 * 7})//7일 유지
+                    res .cookie("user",dbUser.id,{maxAge: 1000 * 60 * 60 * 24 * 7})//7일 유지
                         .status(200).json({message: "user logged in", token});
                 } else { // password doesn't match
                     res.status(401).json({message: "invalid credentials"});
@@ -79,12 +76,12 @@ const logout = (req, res, next) => {
 }
 
 const isAuth = (req, res, next) => {//client로부터 받은 토큰 검증
-    /*const authHeader = req.get("Authorization");
+    const authHeader = req.get("Authorization");
     if (!authHeader) {
         return res.status(401).json({ message: 'not authenticated' });
     };
-    const token = authHeader.split(' ')[1];*/
-    const token=res.cookies.user;
+    const token = authHeader.split(' ')[1];
+    //const token=res.cookies.user;
     let decodedToken; 
     try {
         decodedToken = jwt.verify(token, 'secret');     //토큰 확인
@@ -98,6 +95,18 @@ const isAuth = (req, res, next) => {//client로부터 받은 토큰 검증
         res.status(200).json({ message: 'authorized',decodedToken});
     };
 };
+const isAuthCookie = (req, res, next) => {//client로부터 받은 토큰 검증
+    //console.log("여기야여이",req.headers.cookie); //dbUser=어쩌구; user=1
+    const userId=req.headers.cookie.split(';')[1].split('=')[1];
+    
+    if (!userId) { //로그인x
+        res.status(401).json({ message: 'unauthorized' });
+    } else { //로그인한 상태->userId 넘겨줌
+        res.locals.userId=userId;
+        next();
+    };
+};
 
 
-module.exports = { signup, login, isAuth };
+
+module.exports = { signup, login, isAuth, isAuthCookie };

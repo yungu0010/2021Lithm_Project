@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         fontSize: 16, 
         minHeight: 40,
+        color: 'black',
     },
     button: {
         width: '80%',

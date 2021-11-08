@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform } from "react-native";
 import NumericInput from 'react-native-numeric-input'
+// import { widthNavigation } from 'react-navigation';
 
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
@@ -53,6 +54,7 @@ const MakeStudy = () => {
 
     return (
         <SafeAreaView>
+            {/* <TouchableOpacity style={{width: scaleWidth(66) onPress={() => this.props.navigation.toggleDrawer()}}}>메뉴 아이콘 자리</TouchableOpacity> */}
             <View style={styles.card}>
                 <Text style={styles.heading}>Create a New Study</Text>
                 <View style={styles.form}>
