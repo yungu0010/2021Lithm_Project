@@ -95,10 +95,10 @@ const isAuth = (req, res, next) => {//client로부터 받은 토큰 검증
         res.status(200).json({ message: 'authorized',decodedToken});
     };
 };
-const isAuthCookie = (req, res, next) => {//client로부터 받은 토큰 검증
+const isAuthCookie = (req, res, next) => {//내가 누구인가
     //console.log("여기야여이",req.headers.cookie); //dbUser=어쩌구; user=1
     const userId=req.headers.cookie.split(';')[1].split('=')[1];
-    
+
     if (!userId) { //로그인x
         res.status(401).json({ message: 'unauthorized' });
     } else { //로그인한 상태->userId 넘겨줌
@@ -109,4 +109,4 @@ const isAuthCookie = (req, res, next) => {//client로부터 받은 토큰 검증
 
 
 
-module.exports = { signup, login, isAuth, isAuthCookie };
+module.exports = { signup, login, isAuth, isAuthCookie, logout };

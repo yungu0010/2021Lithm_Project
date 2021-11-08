@@ -26,14 +26,27 @@ export default class extends React.Component { //class로 바꾼모습 뉘신지
       return <Loading></Loading>
     }else{
       const Stack = createStackNavigator();
+      // const Drawer = createDrawerNavigator();
+      // const NavigationDrawerStructure = (props) => {
+      //   const toggleDrawer = () => {
+      //     props.navigationProps.toggleDrawer();
+      //   }
+      // }
       return (
         <NavigationContainer>
           <SafeAreaView style={styles.safeAreaView}>
+            {/* <Drawer.Navigator drawerContentOptions={{
+              activeTintColor: '#e91263', itemStyle: {marginVertical: 5}
+            }}>
+              <Drawer.Screen name="Profile" options={{drawerLabel: 'Profile'}} component={mypage}></Drawer.Screen>
+              <Drawer.Screen name="Penalty" options={{drawerLabel: 'Penalty'}} component={penalty}></Drawer.Screen>
+            </Drawer.Navigator> */}
                 <Stack.Navigator initialRouteName="AuthScreen">
                   <Stack.Screen name="AuthScreen" component={AuthScreen}/>
                   <Stack.Screen name="NoStudy" component={NoStudy}/>
                   <Stack.Screen name="MakeStudy" component={MakeStudy}/>
                 </Stack.Navigator>
+              
           </SafeAreaView>
         </NavigationContainer>)
     }

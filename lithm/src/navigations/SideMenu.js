@@ -67,7 +67,7 @@ export default class DrawerBar extends React.Component {
               textAlign: 'left',
               color: '#272727',
             }}>
-            airplane
+            {/* 닉네임 불러오기 */}
           </Text>
         </View>
         <View>
@@ -82,7 +82,7 @@ export default class DrawerBar extends React.Component {
                   paddingLeft: 30,
                 }}
                 onPress={() => {
-                  data.idx === 8 ? this._logout() : Alert.alert('title', `1${data.idx}`);
+                //   data.idx === 3 ? this._logout() : Alert.alert('title', `1${data.idx}`); 3번째 누르면 로그아웃 실행, 코드 수정 필요
                 }}>
                 <Text
                   style={{

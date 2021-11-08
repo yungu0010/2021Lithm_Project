@@ -6,11 +6,11 @@ import NumericInput from 'react-native-numeric-input'
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
-const MakeStudy = () => {
+const MakeStudy = ({navigation} : {navigation:any}) => {
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState('');
     const [title, setTitle] = useState('');
-    const [solve, setSolve] = useState(1);
+    const [solve, setSolve] = useState(3);
     const [day, setDay] = useState('Sunday');
     const [penalty, setPenalty] = useState(1000);
 
@@ -59,7 +59,7 @@ const MakeStudy = () => {
                 <Text style={styles.heading}>Create a New Study</Text>
                 <View style={styles.form}>
                     <View style={styles.inputs}>
-                        <TextInput style={styles.input} placeholder="Title" autoCapitalize="words" value={title} onChangeText={setTitle}/>
+                        <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle}/>
                         <Text>Rules</Text>
                         <Text>Solve </Text><NumericInput rounded value={solve} onChange={setSolve} /><Text> problems a week</Text>
                         <Text>Deadline    every </Text><TextInput style={styles.input} placeholder="Sunday" value={day} onChangeText={setDay}/>
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         fontSize: 16, 
         minHeight: 40,
+        color: 'black',
     },
     button: {
         width: '80%',
