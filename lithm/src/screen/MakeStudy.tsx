@@ -1,17 +1,43 @@
 import React, {useState} from "react";
 import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform } from "react-native";
-import NumericInput from 'react-native-numeric-input'
-
+import NumericInput from 'react-native-numeric-input';
+import SelectDropdown from 'react-native-select-dropdown'
+// import { widthNavigation } from 'react-navigation';
+import styles from '../styles/styles';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
-const MakeStudy = () => {
+const MakeStudy = ({navigation} : {navigation:any}) => {
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState('');
     const [title, setTitle] = useState('');
-    const [solve, setSolve] = useState(1);
+    const [solve, setSolve] = useState(3);
     const [day, setDay] = useState('Sunday');
-    const [penalty, setPenalty] = useState('');
+    const [penalty, setPenalty] = useState(1000);
+
+
+    // const onMakeStudy = () => {
+    //     fetch(`${API_URL}/Calendar`, { //GET /경로 HTTP/1.1 Host:ApiServer(우리주소) Authorization:Bearer jwttoken 을 제출하는 oAuth방식
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     })
+    //     .then(async res => { //res를 가져옴
+    //         try {
+    //             const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
+    //             if (res.status === 200) {  
+    //                 setMessage(jsonRes.message);
+    //                 navigation.navigate('Calendar'); //스터디가 없으면 이동
+    //             }
+    //         } catch (err) {
+    //             console.log(err);
+    //         };
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+    // }
 
     const onSubmitHandler = () => {
         const payload = {
@@ -20,7 +46,7 @@ const MakeStudy = () => {
             day,
             penalty
         };
-        fetch(`${API_URL}/newstudy`, {
+        fetch(`${API_URL}/makestudy`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,6 +60,7 @@ const MakeStudy = () => {
                     setIsError(true);
                     setMessage(jsonRes.message);
                 } else {
+                    //onMakeStudy();
                     setIsError(false);
                     setMessage(jsonRes.message);
                 }
@@ -51,17 +78,34 @@ const MakeStudy = () => {
         return status + message;
     }
 
+    const date = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
     return (
         <SafeAreaView>
+            {/* <TouchableOpacity style={{width: scaleWidth(66) onPress={() => this.props.navigation.toggleDrawer()}}}>메뉴 아이콘 자리</TouchableOpacity> */}
             <View style={styles.card}>
                 <Text style={styles.heading}>Create a New Study</Text>
                 <View style={styles.form}>
                     <View style={styles.inputs}>
-                        <TextInput style={styles.input} placeholder="Title" autoCapitalize="words" onChangeText={setTitle}></TextInput>
+                        <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle}/>
                         <Text>Rules</Text>
                         <Text>Solve </Text><NumericInput rounded value={solve} onChange={setSolve} /><Text> problems a week</Text>
                         <Text>Deadline    every </Text>
-                        <Text>Penalty    </Text><Text>won</Text>
+                        <SelectDropdown
+                        	data={date}
+                        	onSelect={(selectedItem, index) => setDay(selectedItem)}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                return selectedItem
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                        />
+                        <Text>Penalty    </Text><TextInput style={styles.input} placeholder="1000" onChangeText={(value)=>{const newvalue=parseInt(value);setPenalty(newvalue)}} keyboardType="numeric"/><Text>won</Text>
                         <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{message ? getMessage() : null}</Text>
                         
                         <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
@@ -73,84 +117,5 @@ const MakeStudy = () => {
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    image: {
-        flex: 1,
-        width: '100%',
-        alignItems: 'center',
-    },  
-    card: {
-        flex: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        width: '80%',
-        marginTop: '40%',
-        marginVertical : '10%',
-        borderRadius: 20,
-        maxHeight: 380,
-        paddingBottom: '30%',
-    },
-    heading: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginLeft: '10%',
-        marginTop: '5%',
-        marginBottom: '30%',
-        color: 'black',
-    },
-    form: {
-        flex: 1,
-        justifyContent: 'space-between',
-        paddingBottom: '5%',
-    },
-    inputs: {
-        width: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: '10%',
-    },  
-    input: {
-        width: '80%',
-        borderBottomWidth: 1,
-        borderBottomColor: 'black',
-        paddingTop: 10,
-        fontSize: 16, 
-        minHeight: 40,
-    },
-    button: {
-        width: '80%',
-        backgroundColor: 'black',
-        height: 40,
-        borderRadius: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 5,
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: '400'
-    },
-    buttonAlt: {
-        width: '80%',
-        borderWidth: 1,
-        height: 40,
-        borderRadius: 50,
-        borderColor: 'black',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 5,
-    },
-    buttonAltText: {
-        color: 'black',
-        fontSize: 16,
-        fontWeight: '400',
-    },
-    message: {
-        fontSize: 16,
-        marginVertical: '5%',
-    },
-});
 
 export default MakeStudy;
