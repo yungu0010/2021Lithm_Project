@@ -10,7 +10,7 @@ const router = express.Router();
 router.post('/login', login);
 router.post('/signup', signup);
 router.get('/private', isAuth);
-router.post('/logout', isAuthCookie,logout)
+router.post('/logout', isAuthCookie,logout);
 router.post('/makestudy',isAuthCookie,makeStudy); //로그인 후 스터디 개설
 // will match any other path
 router.use('/', (req, res, next) => {

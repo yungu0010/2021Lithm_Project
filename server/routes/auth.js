@@ -72,6 +72,7 @@ const login = (req, res, next) => {//토큰 생성해서 client에게 보냄
 };
 
 const logout = (req, res, next) => {
+    console.log("hey~");
     return res.cookie("user", "").status(200).json({ logoutSuccess: true });
 }
 

@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform } from "react-native";
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from 'react-native-numeric-input';
+import SelectDropdown from 'react-native-select-dropdown'
 // import { widthNavigation } from 'react-navigation';
-
+import styles from '../styles/styles';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
@@ -52,6 +53,8 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
         return status + message;
     }
 
+    const date = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
     return (
         <SafeAreaView>
             {/* <TouchableOpacity style={{width: scaleWidth(66) onPress={() => this.props.navigation.toggleDrawer()}}}>메뉴 아이콘 자리</TouchableOpacity> */}
@@ -62,7 +65,21 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                         <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle}/>
                         <Text>Rules</Text>
                         <Text>Solve </Text><NumericInput rounded value={solve} onChange={setSolve} /><Text> problems a week</Text>
-                        <Text>Deadline    every </Text><TextInput style={styles.input} placeholder="Sunday" value={day} onChangeText={setDay}/>
+                        <Text>Deadline    every </Text>
+                        <SelectDropdown
+                        	data={date}
+                        	onSelect={(selectedItem, index) => setDay(selectedItem)}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                return selectedItem
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                        />
                         <Text>Penalty    </Text><TextInput style={styles.input} placeholder="1000" onChangeText={(value)=>{const newvalue=parseInt(value);setPenalty(newvalue)}} keyboardType="numeric"/><Text>won</Text>
                         <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{message ? getMessage() : null}</Text>
                         
@@ -75,85 +92,5 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    image: {
-        flex: 1,
-        width: '100%',
-        alignItems: 'center',
-    },  
-    card: {
-        flex: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        width: '80%',
-        marginTop: '40%',
-        marginVertical : '10%',
-        borderRadius: 20,
-        maxHeight: 380,
-        paddingBottom: '30%',
-    },
-    heading: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginLeft: '10%',
-        marginTop: '5%',
-        marginBottom: '30%',
-        color: 'black',
-    },
-    form: {
-        flex: 1,
-        justifyContent: 'space-between',
-        paddingBottom: '5%',
-    },
-    inputs: {
-        width: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: '10%',
-    },  
-    input: {
-        width: '80%',
-        borderBottomWidth: 1,
-        borderBottomColor: 'black',
-        paddingTop: 10,
-        fontSize: 16, 
-        minHeight: 40,
-        color: 'black',
-    },
-    button: {
-        width: '80%',
-        backgroundColor: 'black',
-        height: 40,
-        borderRadius: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 5,
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: '400'
-    },
-    buttonAlt: {
-        width: '80%',
-        borderWidth: 1,
-        height: 40,
-        borderRadius: 50,
-        borderColor: 'black',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 5,
-    },
-    buttonAltText: {
-        color: 'black',
-        fontSize: 16,
-        fontWeight: '400',
-    },
-    message: {
-        fontSize: 16,
-        marginVertical: '5%',
-    },
-});
 
 export default MakeStudy;
