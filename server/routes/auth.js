@@ -2,6 +2,7 @@ const bcryptjs = require('bcryptjs');
 
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const cookieParser = require("cookie-parser");
 
 const signup = (req, res, next) => { //회원가입
     // checks if email already exists
@@ -59,7 +60,9 @@ const login = (req, res, next) => {//토큰 생성해서 client에게 보냄
                 } else if (compareRes) { // password match(성공), 로그인하면 1시간 동안 유지
                     const token = jwt.sign({userId:dbUser.id}, 'secret', {expiresIn: '7d'});
                     //res.cookie('dbUser',token);
-                    res.status(200).json({message: "user logged in", token});
+                    res
+                        .cookie("user",token,{maxAge: 1000 * 60 * 60 * 24 * 7})//7일 유지
+                        .status(200).json({message: "user logged in", token});
                 } else { // password doesn't match
                     res.status(401).json({message: "invalid credentials"});
                 };
@@ -72,17 +75,16 @@ const login = (req, res, next) => {//토큰 생성해서 client에게 보냄
 };
 
 const logout = (req, res, next) => {
-    User.findOne({ where : { user_email: req.body.email}})
-    .then 
+    return res.cookie("user", "").status(200).json({ logoutSuccess: true });
 }
 
 const isAuth = (req, res, next) => {//client로부터 받은 토큰 검증
-    const authHeader = req.get("Authorization");
+    /*const authHeader = req.get("Authorization");
     if (!authHeader) {
         return res.status(401).json({ message: 'not authenticated' });
     };
-    const token = authHeader.split(' ')[1];
-    //const token=req.cookies.dbUser;
+    const token = authHeader.split(' ')[1];*/
+    const token=res.cookies.user;
     let decodedToken; 
     try {
         decodedToken = jwt.verify(token, 'secret');     //토큰 확인

@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/login', login);
 router.post('/signup', signup);
 router.get('/private', isAuth);
-router.post('/logout', logout)
+//router.post('/logout', isAuth,logout)
 /*router.get('/initialscreen', (req, res, next) => {
     res.status(200).json({ message: "here is your public resource" });
 });
