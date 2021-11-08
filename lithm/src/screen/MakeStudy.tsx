@@ -15,6 +15,30 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
     const [day, setDay] = useState('Sunday');
     const [penalty, setPenalty] = useState(1000);
 
+
+    // const onMakeStudy = () => {
+    //     fetch(`${API_URL}/Calendar`, { //GET /경로 HTTP/1.1 Host:ApiServer(우리주소) Authorization:Bearer jwttoken 을 제출하는 oAuth방식
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     })
+    //     .then(async res => { //res를 가져옴
+    //         try {
+    //             const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
+    //             if (res.status === 200) {  
+    //                 setMessage(jsonRes.message);
+    //                 navigation.navigate('Calendar'); //스터디가 없으면 이동
+    //             }
+    //         } catch (err) {
+    //             console.log(err);
+    //         };
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+    // }
+
     const onSubmitHandler = () => {
         const payload = {
             title,
@@ -36,6 +60,7 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                     setIsError(true);
                     setMessage(jsonRes.message);
                 } else {
+                    //onMakeStudy();
                     setIsError(false);
                     setMessage(jsonRes.message);
                 }

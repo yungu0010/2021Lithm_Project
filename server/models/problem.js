@@ -3,10 +3,10 @@ const Sequelize = require('sequelize');
 module.exports = class Problem extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
-        bj_id: {
+        problem_id: {
           type:Sequelize.INTEGER,
           allowNull:false
-        }
+        },
     }, {
       sequelize,
       timestamps: true,

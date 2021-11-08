@@ -97,6 +97,7 @@ const isAuth = (req, res, next) => {//client로부터 받은 토큰 검증
     };
 };
 const isAuthCookie = (req, res, next) => {//내가 누구인가
+    try {
     //console.log("여기야여이",req.headers.cookie); //dbUser=어쩌구; user=1
     const userId=req.headers.cookie.split(';')[1].split('=')[1];
 
@@ -105,6 +106,9 @@ const isAuthCookie = (req, res, next) => {//내가 누구인가
     } else { //로그인한 상태->userId 넘겨줌
         res.locals.userId=userId;
         next();
+    };
+    }catch (err) {
+        return res.status(500).json({ message: err.message || 'could not decode the token' });
     };
 };
 

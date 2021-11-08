@@ -6,6 +6,7 @@ import NoStudy from './NoStudy';
 import MakeStudy from './MakeStudy';
 import styles from '../styles/styles';
 
+
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
 const AuthScreen = ({navigation} : {navigation:any}) => {
@@ -36,7 +37,7 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
                 const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
                 if (res.status === 200) {  //Auth.js 에서 넘겨준 status
                     setMessage(jsonRes.message);
-                    navigation.navigate('NoStudy'); //스터디가 없으면 이동
+                    navigation.navigate('CalendarView'); //스터디가 없으면 이동
                 }
             } catch (err) {
                 console.log(err);
@@ -85,8 +86,10 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
         const status = isError ? `Error: ` : `Success: `;
         return status + message;
     }
+
+  ;
+
     return(
-        //<ImageBackground source={require('../public/images/gradient-back.jpeg')} style={styles.image}>
             <View style={styles.card}>
                 <Text style={styles.heading}>{isLogin ? 'Log into \nYour account' : 'Signup'}</Text>
                 <View style={styles.form}>
@@ -105,7 +108,6 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
                     </View>    
                 </View>
             </View>
-        //</ImageBackground>
     );
 };
 const afterLogin=()=>{

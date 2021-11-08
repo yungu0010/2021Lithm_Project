@@ -17,8 +17,8 @@ const NoStudy = ({navigation} : {navigation:any}) => {
         })
         .then(async res => { //res를 가져옴
             try {
-                console.log("왜안돼")
                 const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
+                console.log(jsonRes);
                 if (res.status === 200) {  //Auth.js 에서 넘겨준 status
                     setMessage(jsonRes.message);
                     navigation.navigate('AuthScreen'); //스터디가 없으면 이동

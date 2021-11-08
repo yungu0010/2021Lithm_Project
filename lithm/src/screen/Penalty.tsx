@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, ImageBackground, SafeAreaView } from "react-nat
 const Penalty = () => {
     return (
         <SafeAreaView>
-            <Text>penalty</Text>
+            <Text>penalty page</Text>
         </SafeAreaView>
     );
 }
