@@ -16,7 +16,7 @@ router.get('/private', isAuth);
     res.status(200).json({ message: "here is your public resource" });
 });
 */
-router.post('makestudy',makeStudy); //로그인 후 스터디 개설
+router.post('/makestudy',makeStudy); //로그인 후 스터디 개설
 // will match any other path
 router.use('/', (req, res, next) => {
     res.status(404).json({error : "page not found"});

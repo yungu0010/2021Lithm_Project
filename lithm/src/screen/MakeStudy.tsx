@@ -11,7 +11,7 @@ const MakeStudy = () => {
     const [title, setTitle] = useState('');
     const [solve, setSolve] = useState(1);
     const [day, setDay] = useState('Sunday');
-    const [penalty, setPenalty] = useState('');
+    const [penalty, setPenalty] = useState(1000);
 
     const onSubmitHandler = () => {
         const payload = {
@@ -20,7 +20,7 @@ const MakeStudy = () => {
             day,
             penalty
         };
-        fetch(`${API_URL}/newstudy`, {
+        fetch(`${API_URL}/makestudy`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,11 +57,11 @@ const MakeStudy = () => {
                 <Text style={styles.heading}>Create a New Study</Text>
                 <View style={styles.form}>
                     <View style={styles.inputs}>
-                        <TextInput style={styles.input} placeholder="Title" autoCapitalize="words" onChangeText={setTitle}></TextInput>
+                        <TextInput style={styles.input} placeholder="Title" autoCapitalize="words" value={title} onChangeText={setTitle}/>
                         <Text>Rules</Text>
                         <Text>Solve </Text><NumericInput rounded value={solve} onChange={setSolve} /><Text> problems a week</Text>
-                        <Text>Deadline    every </Text>
-                        <Text>Penalty    </Text><Text>won</Text>
+                        <Text>Deadline    every </Text><TextInput style={styles.input} placeholder="Sunday" value={day} onChangeText={setDay}/>
+                        <Text>Penalty    </Text><TextInput style={styles.input} placeholder="1000" onChangeText={(value)=>{const newvalue=parseInt(value);setPenalty(newvalue)}} keyboardType="numeric"/><Text>won</Text>
                         <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{message ? getMessage() : null}</Text>
                         
                         <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
