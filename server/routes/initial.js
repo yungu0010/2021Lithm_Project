@@ -6,6 +6,7 @@ const makeStudy=async(req,res,next)=>{
         const titleUnique=await Study.findOne({where:{study_title:title}});
         if(titleUnique) return res.status(409).json({message: "title already exists"});
         else{
+            console.log(res.locals.userId);
             const newStudy = await Study.create({
                 study_master: res.locals.userId,
                 study_title: title,
