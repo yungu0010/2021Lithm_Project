@@ -6,7 +6,7 @@ import NoStudy from './src/screen/NoStudy';
 import MakeStudy from './src/screen/MakeStudy';
 import Profile from './src/screen/Profile';
 import Penalty from './src/screen/Penalty';
-import CalendarView from './src/screen/Calender';
+import CalendarView from './src/screen/Calendar';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { createStackNavigator } from '@react-navigation/stack';

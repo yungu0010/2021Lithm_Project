@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import NoStudy from './NoStudy';
 import MakeStudy from './MakeStudy';
+import CalendarView from './Calendar';
 import styles from '../styles/styles';
 
 
