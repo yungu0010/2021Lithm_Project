@@ -38,7 +38,7 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
                 const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
                 if (res.status === 200) {  //Auth.js 에서 넘겨준 status
                     setMessage(jsonRes.message);
-                    navigation.navigate('CalendarView'); //스터디가 없으면 이동
+                    navigation.navigate('CalendarView');
                 }
             } catch (err) {
                 console.log(err);
@@ -111,16 +111,6 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
             </View>
     );
 };
-const afterLogin=()=>{
-    const Stack = createStackNavigator();
-    return (
-        <NavigationContainer>
-                <Stack.Navigator initialRouteName="NoStudy">
-                  <Stack.Screen name="NoStudy" component={NoStudy}/>
-                  <Stack.Screen name="MakeStudy" component={MakeStudy}/>
-                </Stack.Navigator>
-        </NavigationContainer>)
-}
 
 
 export default AuthScreen;

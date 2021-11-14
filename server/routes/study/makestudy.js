@@ -1,4 +1,4 @@
-const Study = require('../models/study');
+const Study = require('../../models/study');
 
 const makeStudy=async(req,res,next)=>{
     try {

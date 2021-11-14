@@ -49,10 +49,13 @@ export default class extends React.Component {
                   <Stack.Screen name="NoStudy" component={NoStudy}/>
                   <Stack.Screen name="MakeStudy" component={MakeStudy}/>
                   <Stack.Screen name="CalendarView" component={CalendarView}/>
+                  <Stack.Screen name="Profile" component={Profile}/>
+                  <Stack.Screen name="Penalty" component={Penalty}/>
                 </Stack.Navigator>
               
           </SafeAreaView>
-        </NavigationContainer>)
+        </NavigationContainer>
+        )
     }
 
   }

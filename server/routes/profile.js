@@ -1,35 +1,24 @@
 const Study = require('../models/study');
 const User = require('../models/user');
-const Problem = require('../models/problem');
 const axios = require("axios");
 const cheerio = require("cheerio");
 const { next } = require('cheerio/lib/api/traversing');
 
-const studyInfo=async(req,res,next)=>{
+const getProfile = async(req, res, next) => { //프로필 조회
     try{
         const userId=res.locals.userId;
-        const user=await User.findOne({where:{id:userId},attributes:['id','bj_id','user_nick','user_color','user_penalty','StudyId']}); //내 정보
-        const studyId=user.StudyId;   
-        const users=await User.findAll({ where:{studyId:studyId},attributes:['id','bj_id','user_nick','user_color'], raw: true}) //스터디 팀원들
-        const study=await Study.findOne({where:{id:studyId},attributes:['study_title','study_master','study_solve','study_day','study_penalty','createdAt']}); //스터디 정보
-        let result=[];
-        await users.map((usr,index)=>{ //팀원별로 문제들 저장
-            const userId=usr.id;
-            const bj_id=usr.bj_id;
-            const problems=crawl(bj_id,study.createdAt).then((problems)=>{ //스터디 가입한 후 푼 문제번호 가져옴
-                let userProblems=Object.assign(usr,problems);
-                result.push(userProblems)
-                return index
-            }).then((index)=>{
-                if (index==users.length-1){
-                    return res.status(200).json({user, study, result, message: "studyInfoGET success!"}); 
-                }})
-        })
+        const user=await User.findOne({where:{id:userId}});
+        const StudyId=user.StudyId;
+        const study=await Study.findOne({where:{id:StudyId}});
+        const count=await User.count({where:{StudyId}});
+        let result;
+        crawl(user.bj_id,study.createdAt).then((problems)=>{
+            result=Object.assign(user,problems);
+        }).then(()=>{
+            return res.status(200).json({user, study, count, result, message: "profileGET success!"}); 
+        });
     }
-    catch(error){
-        console.error(error);
-        next(error);
-    }
+    catch(err){console.log(err); next(error);}
 }
 const crawl=async(bj_id,createdAt)=>{ 
     try{
@@ -55,11 +44,11 @@ const crawl=async(bj_id,createdAt)=>{
        $('tbody>tr>td:nth-child(3)>a').each((index, item) => { // 문제 번호
             if(index<=idx){ //createdAt 이후 푼 문제들만 저장
                 if(SF[index].includes('result-ac')){ //성공
-                    success.push([item.attribs.href.substr(9),time[index]])
+                    success.push(item.attribs.href.substr(9))
                 }
                 else{ //실패
                     if(!success.includes(item.attribs.href.substr(9))){ //success에 문제가 없을 경우에만
-                        fail.push(item.attribs.href.substr(9),time[index])
+                        fail.push(item.attribs.href.substr(9))
                     }
                 }
             }
@@ -72,4 +61,4 @@ const crawl=async(bj_id,createdAt)=>{
     }
 }
 
-module.exports={studyInfo};
+module.exports={getProfile}

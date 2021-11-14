@@ -81,15 +81,21 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
     const date = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             {/* <TouchableOpacity style={{width: scaleWidth(66) onPress={() => this.props.navigation.toggleDrawer()}}}>메뉴 아이콘 자리</TouchableOpacity> */}
+            <Text style={styles.heading}>Create a New Study</Text>
             <View style={styles.card}>
-                <Text style={styles.heading}>Create a New Study</Text>
+                
                 <View style={styles.form}>
                     <View style={styles.inputs}>
                         <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle}/>
+                        
+                        <View style={{flexDirection: 'row' ,margin: '5%'}}>
                         <Text>Rules</Text>
                         <Text>Solve </Text><NumericInput rounded value={solve} onChange={setSolve} /><Text> problems a week</Text>
+                        </View>
+
+                        <View  style={{flexDirection: 'row' ,margin: '5%'}}>
                         <Text>Deadline    every </Text>
                         <SelectDropdown
                         	data={date}
@@ -105,12 +111,17 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                                 return item
                             }}
                         />
-                        <Text>Penalty    </Text><TextInput style={styles.input} placeholder="1000" onChangeText={(value)=>{const newvalue=parseInt(value);setPenalty(newvalue)}} keyboardType="numeric"/><Text>won</Text>
+                        </View>
+
+                        <View style={{flexDirection: 'row' ,margin: '5%'}}>
+                        <Text>Penalty    </Text><TextInput style={styles.input} placeholder="1000" onChangeText={(value)=>{const newvalue=parseInt(value);setPenalty(newvalue)}} keyboardType="numeric"/><Text> won</Text>
                         <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{message ? getMessage() : null}</Text>
-                        
+                        </View>
+
                         <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
                             <Text style={styles.buttonText}>Submit</Text>
                         </TouchableOpacity>
+
                     </View>    
                 </View>
             </View>
