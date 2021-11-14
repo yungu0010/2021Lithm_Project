@@ -14,7 +14,7 @@ const CalendarView: React.FC = () => {
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState('');
     const [items, setItems] = useState([]);
-    let s,u,us;
+    let s,u,r;
     //내가 푼 문제들만 calendar에 나타내면 성공
     //내 색깔을 calendar에 표시해야하고, calendar 밑 view에는 내가 푼 문제들 번호 나타내기
     const getMessage = () => {
@@ -33,10 +33,11 @@ const CalendarView: React.FC = () => {
                 const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
                 if (res.status === 200) {  //Auth.js 에서 넘겨준 status
                     setMessage(jsonRes.message);
-                    const {study,user,users, problems}=jsonRes;
+                    const {study,user,result}=jsonRes;
+                    console.log("무s;",result)
                     s=study;
                     u=user;
-                    us=users;
+                    r=result;
                 }
             } catch (err) {
                 console.log(err);
@@ -47,7 +48,6 @@ const CalendarView: React.FC = () => {
         });
     }
     getStudyInfo();
-
     const loadItems = (day: { timestamp: number; }) => {
         setTimeout(() => {
           for (let i = -15; i < 85; i++) {
