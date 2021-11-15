@@ -11,11 +11,10 @@ const getProfile = async(req, res, next) => { //프로필 조회
         const StudyId=user.StudyId;
         const study=await Study.findOne({where:{id:StudyId}});
         const count=await User.count({where:{StudyId}});
-        let result;
         crawl(user.bj_id,study.createdAt).then((problems)=>{
-            result=Object.assign(user,problems);
-        }).then(()=>{
-            return res.status(200).json({user, study, count, result, message: "profileGET success!"}); 
+            return problems;
+        }).then((problems)=>{
+            return res.status(200).json({user, study, count, problems, message: "profileGET success!"}); 
         });
     }
     catch(err){console.log(err); next(error);}
@@ -53,14 +52,18 @@ const crawl=async(bj_id,createdAt)=>{
                 }
             }
           });
-        return {success,fail}
+        let set = new Set(success);//중복 제거
+        let success_unique=[...set];
+        set=new Set(fail);
+        let fail_unique=[...set]
+        return {success:success_unique,fail:fail_unique}
     }
     catch(err){
         console.log(err);
         next(err);
     }
 }
-const postProfile = async(req, res, next) => { //프로필 조회
+const postProfile = async(req, res, next) => { //닉네임 수정
     try{
         const userId=res.locals.userId;
         const user=await User.findOne({where:{id:userId}});
