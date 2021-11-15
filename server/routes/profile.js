@@ -60,5 +60,17 @@ const crawl=async(bj_id,createdAt)=>{
         next(err);
     }
 }
-
-module.exports={getProfile}
+const postProfile = async(req, res, next) => { //프로필 조회
+    try{
+        const userId=res.locals.userId;
+        const user=await User.findOne({where:{id:userId}});
+        const newNick=req.body.nick;
+        await User.update({user_nick:newNick},{where:{id:userId}});
+        res.status(200).json({nick:newNick});
+    }
+    catch(err){
+        console.error(err);
+        next(err);
+    }
+}
+module.exports={getProfile,postProfile}

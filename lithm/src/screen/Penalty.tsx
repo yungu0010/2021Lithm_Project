@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, ImageBackground, SafeAreaView, TouchableOpacity
 import {  Title, Caption } from 'react-native-paper';
 import styles from '../styles/styles';
 
-const Penalty = () => {
+const Penalty = ({navigation} : {navigation:any}) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <TouchableOpacity onPress={()=>navigation.goBack()}></TouchableOpacity>
             <View style={{paddingHorizontal: 30, margin: 25}}>
             <Title style={styles.heading}>Penalty</Title>
             </View>

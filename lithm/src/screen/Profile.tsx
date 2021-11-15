@@ -1,12 +1,20 @@
-import React, {useState} from 'react';
-import {View, SafeAreaView, StyleSheet, Image, TouchableOpacity,Platform} from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {View, SafeAreaView, StyleSheet, Image, TouchableOpacity,Platform, TextInput} from 'react-native';
 import { Title, Caption, Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { Card } from 'react-native-shadow-cards';
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
 let u,s,c,r;
-const getProfile = () => {
+const Profile = ({navigation} : {navigation:any}) => {
+  const [nick,setNick]=useState('');
+  const [input,setInput]=useState(0);
+  const [title,setTitle]=useState('');
+  const [email,setEmail]=useState('');
+  const [count,setCount]=useState(0);
+  const [penalty,setPenalty]=useState(0);
+
+  const getProfile = () => {
     fetch(`${API_URL}/profile`, { 
         method: 'GET',
         headers: {
@@ -26,38 +34,77 @@ const getProfile = () => {
     })
     .then((element)=>{
         u=element?.user; s=element?.study; c=element?.count; r=element?.result;
-        console.log(s);
+        setNick(u['user_nick']);setTitle(s['study_title']);setEmail(u['user_email']);setCount(c);setPenalty(u['user_penalty']);
     })
     .catch(err => {
         console.log(err);
     });
-}
+  }
+  const editNick = () => {
+      const payload = {
+        nick
+    };
+    fetch(`${API_URL}/profile`, { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(async res => { //res를 가져옴
+        try {
+            const jsonRes = await res.json();
+            if (res.status === 200) { 
+                const {nick}=jsonRes; //나,스터디,인원,푼 문제들
+                setNick(nick)
+            }
+        } catch (err) {
+            console.log(err);
+        };
+    })
+    .catch(err => {
+        console.log(err);
+    });
+  }
+  useEffect(() => {
+    getProfile();
+  },[]);
 
-const Profile = () => {
-  getProfile();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
+      <TouchableOpacity onPress={()=>navigation.goBack()}><Text>뒤로 가기</Text></TouchableOpacity>
         <View style={{flexDirection: 'row', marginTop: 15}}>
             {/* //프로필 사진 넣기 */}
           <View style={{marginLeft: 20}}>
             <Title style={[styles.title, {
               marginTop:15,
               marginBottom: 5,
-            }]}>하</Title>
+              color:'black'
+            }]}>{title}</Title>
           </View>
         </View>
       </View>
 
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
-          <Icon name="email" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>Baekjoon id</Text>
+          <Icon name="email" color="#777777" size={20}/><Text>{email}</Text>
+          {!input?<View><TouchableOpacity onPress={()=>setInput(1)}><Text style={{color:"black"}}>{nick}</Text></TouchableOpacity></View>
+          :<View><TextInput onChangeText={setNick} autoFocus={true}></TextInput>
+          <TouchableOpacity onPress={()=>{editNick();setInput(0)}}><Text>닉네임 수정</Text></TouchableOpacity></View>}
         </View>
       </View>
 
       <View>
-          <Text style={{marginLeft: 20}}>My Study</Text>
+        <View style={{flexDirection: 'row'}}>
+        <Text>{title}</Text>
+        <Text><Icon name="account-group" size={20}></Icon>{count}</Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+        <Text>Penalty</Text>
+        <Text>{penalty}</Text>
+        </View>
+        <Text>진행 현황</Text>
           {/* <Card style={styles.card}>
               <View style={{flexDirection: 'row'}}>
               <Text>내 스터디 이름</Text>
