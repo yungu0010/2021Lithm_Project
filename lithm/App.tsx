@@ -7,13 +7,13 @@ import MakeStudy from './src/screen/MakeStudy';
 import Profile from './src/screen/Profile';
 import Penalty from './src/screen/Penalty';
 import CalendarView from './src/screen/Calendar';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import Manage from './src/screen/Manage';
 
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 // import DrawerBar from './src/navigations/SideMenu';
-
 
 export default class extends React.Component {
   state={
@@ -51,6 +51,7 @@ export default class extends React.Component {
                   <Stack.Screen name="CalendarView" component={CalendarView}/>
                   <Stack.Screen name="Profile" component={Profile}/>
                   <Stack.Screen name="Penalty" component={Penalty}/>
+                  <Stack.Screen name="Manage" component={Manage}/>
                 </Stack.Navigator>
               
           </SafeAreaView>

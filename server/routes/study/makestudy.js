@@ -6,6 +6,7 @@ const makeStudy=async(req,res,next)=>{
         const titleUnique=await Study.findOne({where:{study_title:title}});
         if(titleUnique) return res.status(409).json({message: "title already exists"});
         else{
+            const color="#"+Math.round(Math.random()*0xffffff).toString(16);
             const userId=res.locals.userId;
             const newStudy = await Study.create({
                 study_master: userId,
@@ -15,6 +16,7 @@ const makeStudy=async(req,res,next)=>{
                 study_penalty: penalty
             });
             await newStudy.addUser(userId);
+            await User.update({user_color:color},{where:{id:res.locals.userId}})
             res.status(200).json({message: "user created"});        
         }
     }catch(err){

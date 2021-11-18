@@ -1,4 +1,4 @@
-import React, { useState ,useMemo,useEffect} from 'react';
+import React, { useState ,useMemo, useEffect, useRef} from 'react';
 import { ImageBackground, View, Text, StyleSheet,TouchableOpacity, TextInput, Platform, SafeAreaView } from 'react-native';
 import styles from '../styles/styles';
 import {Agenda, Calendar} from 'react-native-calendars';
@@ -7,30 +7,20 @@ import { color } from 'react-native-reanimated';
 import { black } from 'react-native-paper/lib/typescript/styles/colors';
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
-  
-let s,u,r: any[];
-
 const CalendarView = ({navigation} : {navigation:any}) => {
     //내가 푼 문제들만 calendar에 나타내면 성공
     //내 색깔을 calendar에 표시해야하고, calendar 밑 view에는 내가 푼 문제들 번호 나타내기turn status + message;
     ///const [study_ti,ㅎㅁㅅ]=use
-    const [studyName, setStudyname] = useState('');
-    const [studySolve, setStudysolve] = useState('');
-    const [studyDay, setStudyday] = useState('');
-    const [userName, setUsername] = useState('');
-    const [userPenalty, setUserpenalty] = useState('');
-    const [bjId, setBjid] = useState('');
-    const [proDate, setProdate] = useState([]);
+    const [studyName, setStudyname] = useState('');   //스터디명
+    const [studySolve, setStudysolve] = useState(''); //스터디 문제풀이 규칙
+    const [studyDay, setStudyday] = useState('');     //스터디 리셋 날짜
+    const [userName, setUsername] = useState('');     //유저이름
+    const [userPenalty, setUserpenalty] = useState(''); //유저벌금
+    const [bjId, setBjid] = useState('');             //유저 백준 아이디
+    const [proDate, setProdate] = useState([]);       //문제 풀이 한 날
+    const [userInfo, setUserinfo] = useState([]);     //유저 정보
+    const [success, setSuccess] = useState([]);       //유저가 푼 문제
 
-
-  // const Result = ({result}:{result:any[]}) => {
-  //   return(
-  //     <View>
-  //     <Text>{result['bj_id']}</Text>
-  //     <Text>{result['success']}</Text>
-  //     </View>
-  //   );
-  // }
     const getStudyInfo = () => {
       fetch(`${API_URL}/study/info`, { //GET /경로 HTTP/1.1 Host:ApiServer(우리주소) Authorization:Bearer jwttoken 을 제출하는 oAuth방식
           method: 'GET',
@@ -42,77 +32,48 @@ const CalendarView = ({navigation} : {navigation:any}) => {
           try {
               const jsonRes = await res.json();
               if (res.status === 200) {
-                  const {study,user,result}=jsonRes;
+                  const {study,user,result}=jsonRes; //members 가져올 수 있음
         //[{'bj_id':'tlszn121','user_color':'#777777','user_nick':'아아','success':[[Array],[Array]],'fail':[['11047','2011-11-12T10:01:44.00Z']]}],  ['succes'][0]:문제번호, ['fail'][1]:시간
-                  s=study;u=user;r=result;
-                  setStudysolve(s['study_solve']);
-                  setStudyname(s['study_title']);
-                  setStudyday(s['study_day']);
-                  setUsername(u['user_nick']);
-                  setUserpenalty(u['user_penalty']);
-                  setBjid(u['bj_id']);
-                  for(let i=0; i<r.length; i++){
-                    if(r[i]['bj_id'] == bjId){
-                      setProdate(r[i]['success']);
+                  console.log(result)
+                  setStudysolve(study['study_solve']);
+                  setStudyname(study['study_title']);
+                  setStudyday(study['study_day']);
+                  setUsername(user['user_nick']);
+                  setUserpenalty(user['user_penalty']);
+                  setBjid(user['bj_id']);
+                  console.log("유저인포" + userInfo)
+                  for(let i in userInfo){
+                    console.log(i)
+                  }
+                  for(let i=0; i<result.length; i++){
+                    setUserinfo(result[i]);
+                    for (let j in userInfo){
+                      console.log("j??" + userInfo[j]);
+                    }
+                    if(result[i]['bj_id'] == bjId){
+                      setProdate(result[i]['success']);
                       break;
                     }
-                  }
-                  return {study,user,result}
-              }
+                  } 
+                  [0,1].map((index)=>{result[index]['user_nick']})
+                  } 
           } catch (err) {
               console.log(err);
           };
       })
-      .then(async (element)=>{
-        s=element?.study;
-        u=element?.user; //나만.
-        r=element?.result //users들의
-        return r
-      })
-      //   s=element?.study; //[]
-      //   u=element?.user; //나만.
-      //   r=element?.result //users들의 
-      //하뭇(s[''])
-      //   /*let arr:any[] =[]
-      //   await r.map((value,index)=>{
-      //     console.log(value)
-      //     arr.push (<View><Text style={{color:"black",backgroundColor:"yellow",width:30,height:30}}>{value['bj_id']}</Text></View>)
-      //   })
-      //   return arr;*/
-
-      //   r.map((value,index)=>{
-      //     console.log(value['bj_id']);
-      //     return (
-      //       <View>
-      //         <Text>{value['bj_id']}</Text>
-      //       </View>
-
-      //     )
-      //    })
-      // })
       .catch(err => {
           console.log(err);
       });
     }
 
-
-    // useEffect(()=>{getStudyInfo();ResultList(r);console.log("!@!#" + proDate);},[]);
-    // const ResultList = ({result}:{result:any}) => {
-    //   return (
-    //     <View>
-    //       {result.map((r: any,index:number)=>(
-    //         <Result result={r} key={index} />
-    //       ))}
-    //     </View>
-    //   )
-    // }
-    
-
-    // const max = moment().add(100, 'years').format("YYYY-MM-DD");
-    // const min = moment().substract(100, 'years').format("YYYY-MM-DD");
-    // let mark = {
-    //   proDate: {marked: true, disabled: false}
-    // };
+    const Display = () => {
+      // for (let i in userInfo){
+      //   setArray.push(<View>{userInfo[i]}</View>)
+      // }
+      // return array;
+      // userInfo.map((element: any[])=><Text>{element+"      "}</Text>)
+      //이 함수 실행됐을 때 달력 아래 View로 유저마다 푼 정보 보여줄 수 있도록 만들기
+    }
     useEffect(()=>getStudyInfo(),[])
 
       return (
@@ -123,27 +84,28 @@ const CalendarView = ({navigation} : {navigation:any}) => {
           <Text>{userPenalty}</Text>
           </View>
           <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
-            <Text >profile</Text>
+            <Text>Profile</Text>
           </TouchableOpacity> 
-          
-          <Text>함수 실행 되나</Text>
+          <TouchableOpacity onPress={()=> navigation.navigate('Manage')}>
+            <Text>Manage</Text>
+          </TouchableOpacity> 
+          <TouchableOpacity onPress={()=> navigation.navigate('Manage')}>
+            <Text>개빡침</Text>
+          </TouchableOpacity> 
+
           <Calendar style={styleCalendar.calendar} 
-            maxDate={new Date(1999, 1, 1)}
-            minDate={new Date(2999, 12, 31)}
             enableSwipeMonths
+            onDayPress={()=>(console.log())}
             >
           </Calendar>
-          <TouchableOpacity >
-          <Text style={{color: 'black'}}>{studyName}</Text>
-          </TouchableOpacity> 
-          <Text style={{color: 'black'}}>{studySolve}</Text>
+          <Text>{proDate}</Text>
+          <Text>{userInfo}</Text>
+          {/*[0,1,2].map((index)=>{<View><Text style={{color : 'black'}}>{userInfo[index]['user_nick']}</Text></View>})*/}
+          {/* <Text>결과{result[0]['user_nick']}</Text>
+          <Text>뱉어내{result[0]['success']}</Text> */}
 
-             {/* <Agenda
-                items={items}
-                loadItemsForMonth={loadItems}
-                selected={'2021-05-16'}
-                renderItem={renderItem}
-            />  */}
+          <Text style={{color: 'black'}}>{studyName}</Text>
+          <Text style={{color: 'black'}}>{studySolve}</Text>
         </SafeAreaView>
       );
 }
