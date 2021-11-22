@@ -111,6 +111,19 @@ const isAuthCookie = (req, res, next) => {//내가 누구인가
     };
 };
 
+const hasStudy = (req, res, next) => {//토큰 생성해서 client에게 보냄
+    User.findOne({ where : { id: res.locals.userId}})
+    .then(dbUser => {
+        if (!dbUser) {
+            return res.status(404).json({message: "user not found"});
+        } else { //존재
+            if(!dbUser.StudyId) return res.status(200).json({message:"nostudy"})
+            else return res.status(200).json({message:"makestudy"})
+        };
+    })
+    .catch(err => {
+        console.log('error', err);
+    });
+};
 
-
-module.exports = { signup, login, isAuth, isAuthCookie, logout };
+module.exports = { signup, login, isAuth, isAuthCookie, logout,hasStudy };

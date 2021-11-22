@@ -5,15 +5,11 @@ import AuthScreen from './src/screen/AuthScreen';
 import NoStudy from './src/screen/NoStudy';
 import MakeStudy from './src/screen/MakeStudy';
 import Profile from './src/screen/Profile';
-import Penalty from './src/screen/Penalty';
 import CalendarView from './src/screen/Calendar';
 import Manage from './src/screen/Manage';
 
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-
-// import DrawerBar from './src/navigations/SideMenu';
 
 export default class extends React.Component {
   state={
@@ -28,29 +24,16 @@ export default class extends React.Component {
     if(this.state.isLoading){
       return <Loading></Loading>
     }else{
-      const Stack = createStackNavigator();
-      //const Drawer = createDrawerNavigator();
-
-      // function Menu() {
-      //   return(
-      //     <Drawer.Navigator>
-      //         <Drawer.Screen name="Profile" options={{drawerLabel: 'Profile'}} component={Profile}></Drawer.Screen>
-      //         <Drawer.Screen name="Penalty" options={{drawerLabel: 'Penalty'}} component={Penalty}></Drawer.Screen>
-      //       </Drawer.Navigator>
-      //   )
-      // }
-     
+      const Stack = createStackNavigator();    
       return (
         <NavigationContainer>
           <SafeAreaView style={styles.safeAreaView}>
-                <Stack.Navigator initialRouteName="AuthScreen" screenOptions={{ headerShown: false }}>
-                  {/* <Stack.Screen name="Menu" component={Menu} options={{headerShown: false}}/> */}
+                <Stack.Navigator initialRouteName="AuthScreen">
                   <Stack.Screen name="AuthScreen" component={AuthScreen}/>
                   <Stack.Screen name="NoStudy" component={NoStudy}/>
                   <Stack.Screen name="MakeStudy" component={MakeStudy}/>
                   <Stack.Screen name="CalendarView" component={CalendarView}/>
                   <Stack.Screen name="Profile" component={Profile}/>
-                  <Stack.Screen name="Penalty" component={Penalty}/>
                   <Stack.Screen name="Manage" component={Manage}/>
                 </Stack.Navigator>
               

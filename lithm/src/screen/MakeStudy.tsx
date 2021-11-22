@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useMemo} from "react";
 import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform } from "react-native";
 import NumericInput from 'react-native-numeric-input';
 import SelectDropdown from 'react-native-select-dropdown'
@@ -14,30 +14,6 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
     const [solve, setSolve] = useState(3);
     const [day, setDay] = useState('Sunday');
     const [penalty, setPenalty] = useState(1000);
-
-
-    // const onMakeStudy = () => {
-    //     fetch(`${API_URL}/Calendar`, { //GET /경로 HTTP/1.1 Host:ApiServer(우리주소) Authorization:Bearer jwttoken 을 제출하는 oAuth방식
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //     })
-    //     .then(async res => { //res를 가져옴
-    //         try {
-    //             const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
-    //             if (res.status === 200) {  
-    //                 setMessage(jsonRes.message);
-    //                 navigation.navigate('Calendar'); //스터디가 없으면 이동
-    //             }
-    //         } catch (err) {
-    //             console.log(err);
-    //         };
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
-    // }
 
     const onSubmitHandler = () => {
         const payload = {
@@ -78,11 +54,10 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
         return status + message;
     }
 
-    const date = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const date = useMemo(()=>["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],[])
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* <TouchableOpacity style={{width: scaleWidth(66) onPress={() => this.props.navigation.toggleDrawer()}}}>메뉴 아이콘 자리</TouchableOpacity> */}
             <Text style={styles.heading}>Create a New Study</Text>
             <View style={styles.card}>
                 
@@ -101,13 +76,9 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                         	data={date}
                         	onSelect={(selectedItem, index) => setDay(selectedItem)}
                             buttonTextAfterSelection={(selectedItem, index) => {
-                                // text represented after item is selected
-                                // if data array is an array of objects then return selectedItem.property to render after item is selected
                                 return selectedItem
                             }}
                             rowTextForSelection={(item, index) => {
-                                // text represented for each item in dropdown
-                                // if data array is an array of objects then return item.property to represent item in dropdown
                                 return item
                             }}
                         />

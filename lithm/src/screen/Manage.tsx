@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 import {SafeAreaView, Text, View, StyleSheet, TouchableOpacity,TextInput, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NumericInput from 'react-native-numeric-input';
@@ -16,7 +16,7 @@ const Manage = ({navigation} : {navigation:any}) => {
     const [email, setEmail] = useState('');
     const [press, setPress] = useState(0);
     const [updatePress, setUpdatePress] = useState(0);
-    const date = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const date = useMemo(()=>["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],[])
     const getStudyInfo = () => {
         fetch(`${API_URL}/study/info`, { 
             method: 'GET',
@@ -106,7 +106,6 @@ const Manage = ({navigation} : {navigation:any}) => {
     
     return (
         <SafeAreaView>
-            <TouchableOpacity onPress={()=>navigation.goBack()}><Text>뒤로 가기</Text></TouchableOpacity>
             <Text>{studyName}</Text>
             <View style={{flexDirection:'row'}}>
                 <Icon name="account-group" color="#777777" size={20}/>
@@ -145,7 +144,7 @@ const Manage = ({navigation} : {navigation:any}) => {
                     rowTextForSelection={(item, index) => {return item}}
                 /></View>
                 <View style={{flexDirection: 'row' ,margin: '5%'}}>
-                <Text>Penalty    </Text><TextInput style={styles.input} value={studyPenalty} onChangeText={(value)=>{const newvalue=parseInt(value);setStudypenalty(newvalue)}} keyboardType="numeric"/><Text> won</Text>
+                <Text>Penalty    </Text><TextInput style={styles.input} value={String(studyPenalty)} onChangeText={(value)=>{const newvalue=parseInt(value);setStudypenalty(newvalue)}} keyboardType="numeric"/><Text> won</Text>
                 </View>
                 <TouchableOpacity style={styles.button} onPress={updateRule}>
                     <Text style={styles.buttonText}>Submit</Text>

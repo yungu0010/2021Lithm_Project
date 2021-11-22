@@ -26,9 +26,9 @@ const Profile = ({navigation} : {navigation:any}) => {
     })
     .then(async res => { //res를 가져옴
         try {
-            const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경  
-            if (res.status === 200) {  //Auth.js 에서 넘겨준 status
-                const {user,study,count,problems}=jsonRes; //나,스터디,인원,푼 문제들
+            const jsonRes = await res.json();
+            if (res.status === 200) {  
+                const {user,study,count,problems}=jsonRes;
                 return {user,study,count,problems}
             }
         } catch (err) {
@@ -96,7 +96,6 @@ const Profile = ({navigation} : {navigation:any}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
-      <TouchableOpacity onPress={()=>navigation.goBack()}><Text>뒤로 가기</Text></TouchableOpacity>
         <View style={{flexDirection: 'row', marginTop: 15}}>
           <View style={{backgroundColor:color}}></View>
           <View style={{marginLeft: 20}}>

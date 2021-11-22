@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { ImageBackground, View, Text, StyleSheet,SafeAreaView, TouchableOpacity, TextInput, Platform } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import NoStudy from './NoStudy';
 import MakeStudy from './MakeStudy';
 import CalendarView from './Calendar';
@@ -24,7 +22,21 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
         setIsLogin(!isLogin);
         setMessage('');
     };
-
+    const hasStudy=()=>{
+        fetch(`${API_URL}/hasstudy`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json'},
+        }).then(async res=>{
+            try{
+                const has=await res.json();
+                if(has.message=='nostudy'){ navigation.navigate('NoStudy')}
+                else{ navigation.navigate('CalendarView') }
+            }
+            catch(err) { console.log(err); };
+        }).catch(err => {
+            console.log(err);
+        });
+    };
     const onLoggedIn = (token: any) => {
         fetch(`${API_URL}/private`, { //GET /경로 HTTP/1.1 Host:ApiServer(우리주소) Authorization:Bearer jwttoken 을 제출하는 oAuth방식
             method: 'GET',
@@ -38,7 +50,7 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
                 const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
                 if (res.status === 200) {  //Auth.js 에서 넘겨준 status
                     setMessage(jsonRes.message);
-                    navigation.navigate('CalendarView');
+                    hasStudy();
                 }
             } catch (err) {
                 console.log(err);
@@ -91,24 +103,24 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
   ;
 
     return(
-            <View style={styles.card}>
-                <Text style={styles.heading}>{isLogin ? 'Log into \nYour account' : 'Signup'}</Text>
-                <View style={styles.form}>
-                    <View style={styles.inputs}>
-                        <TextInput style={styles.input} placeholder="Email" autoCapitalize="none" onChangeText={setEmail}></TextInput>
-                        {!isLogin && <TextInput style={styles.input} placeholder="Name" onChangeText={setNick}></TextInput>}
-                        <TextInput secureTextEntry={true} style={styles.input} placeholder="Password" onChangeText={setPassword}></TextInput>
-                        {!isLogin && <TextInput style={styles.input} placeholder="Bj ID" onChangeText={setBjId}></TextInput>}
-                        <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{message ? getMessage() : null}</Text>
-                        <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
-                            <Text style={styles.buttonText}>Done</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonAlt} onPress={onChangeHandler}>
-                            <Text style={styles.buttonAltText}>{isLogin ? 'Sign Up' : 'Log In'}</Text>
-                        </TouchableOpacity>
-                    </View>    
-                </View>
-            </View>
+    <View style={styles.card}>
+        <Text style={styles.heading}>{isLogin ? 'Log into \nYour account' : 'Signup'}</Text>
+        <View style={styles.form}>
+            <View style={styles.inputs}>
+                <TextInput style={styles.input} placeholder="Email" autoCapitalize="none" onChangeText={setEmail}></TextInput>
+                {!isLogin && <TextInput style={styles.input} placeholder="Name" onChangeText={setNick}></TextInput>}
+                <TextInput secureTextEntry={true} style={styles.input} placeholder="Password" onChangeText={setPassword}></TextInput>
+                {!isLogin && <TextInput style={styles.input} placeholder="Bj ID" onChangeText={setBjId}></TextInput>}
+                <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{message ? getMessage() : null}</Text>
+                <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
+                    <Text style={styles.buttonText}>Done</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonAlt} onPress={onChangeHandler}>
+                    <Text style={styles.buttonAltText}>{isLogin ? 'Sign Up' : 'Log In'}</Text>
+                </TouchableOpacity>
+            </View>    
+        </View>
+    </View>
     );
 };
 

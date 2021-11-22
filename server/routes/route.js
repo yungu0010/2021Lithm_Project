@@ -6,20 +6,19 @@ const {getStudy}=require('./study/getStudy');
 const {resignStudy}=require('./study/resignStudy');
 const {addMember}=require('./study/addMember');
 const {getProfile,postProfile}=require('./profile');
-const {getPenalty}=require('./penalty');
-const {login,signup,isAuth,isAuthCookie,logout }= auth;
+const {login,signup,isAuth,isAuthCookie,logout,hasStudy}= auth;
 const router = express.Router();
 
 router.post('/login', login);
 router.post('/signup', signup);
 router.get('/private', isAuth);
 router.get('/logout', isAuthCookie,logout);
+router.get('/hasstudy',isAuthCookie,hasStudy);
 router.post('/makestudy',isAuthCookie,makeStudy); //로그인 후 스터디 개설
 router.get('/study/info',isAuthCookie,getStudy); //스터디 목표, 팀원들 color
 router.get('/study/resign',isAuthCookie,resignStudy); //스터디 탈퇴
 
 router.get('/profile',isAuthCookie,getProfile);
-router.get('/penalty',isAuthCookie,getPenalty);
 
 router.post('/profile',isAuthCookie,postProfile); //프로필 수정
 router.post('/study/addmember',isAuthCookie,addMember); //스터디원 추가

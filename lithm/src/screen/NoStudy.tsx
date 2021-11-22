@@ -8,19 +8,19 @@ const NoStudy = ({navigation} : {navigation:any}) => {
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState('');
     const onLogout = () => {
-        fetch(`${API_URL}/logout`, { //GET /경로 HTTP/1.1 Host:ApiServer(우리주소) Authorization:Bearer jwttoken 을 제출하는 oAuth방식
+        fetch(`${API_URL}/logout`, { 
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json', 
             },
         })
-        .then(async res => { //res를 가져옴
+        .then(async res => { 
             try {
-                const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
+                const jsonRes = await res.json();   
                 console.log(jsonRes);
-                if (res.status === 200) {  //Auth.js 에서 넘겨준 status
+                if (res.status === 200) { 
                     setMessage(jsonRes.message);
-                    navigation.navigate('AuthScreen'); //스터디가 없으면 이동
+                    navigation.navigate('AuthScreen');
                 }
             } catch (err) {
                 console.log(err);

@@ -10,18 +10,18 @@ const getStudy=async(req,res,next)=>{
         const user=await User.findOne({where:{id:userId},attributes:['id','bj_id','user_nick','user_color','user_penalty','StudyId']}); //내 정보
         const studyId=user.StudyId;   
         const users=await User.findAll({ where:{studyId:studyId},attributes:['id','bj_id','user_nick','user_color'], raw: true}) //스터디 팀원들
+        const colors=await User.findAll({ where:{studyId:studyId},attributes:['user_color'], raw: true});
         const study=await Study.findOne({where:{id:studyId},attributes:['study_title','study_master','study_solve','study_day','study_penalty','createdAt']}); //스터디 정보
         const members=await User.findAll({ where:{studyId:studyId},attributes:['user_nick'], raw: true}) //스터디 팀원들
         let result=[];
         await users.map((usr,index)=>{ //팀원별로 문제들 저장
             const bj_id=usr.bj_id;
-            const problems=crawl(bj_id,study.createdAt).then((problems)=>{ //스터디 가입한 후 푼 문제번호 가져옴
-                let userProblems=Object.assign(usr,problems);
-                result.push(userProblems)
+            crawl(bj_id,study.createdAt).then((problems)=>{
+                result.push(problems)
                 return index
             }).then((index)=>{
                 if (index==users.length-1){
-                    return res.status(200).json({user, study, result, members, message: "studyInfoGET success!"}); 
+                    return res.status(200).json({user, study, result, members,colors, message: "studyInfoGET success!"}); 
                 }})
         })
     }
