@@ -1,13 +1,18 @@
 import React, { useState ,useMemo, useEffect, useRef} from 'react';
 import { ImageBackground, View, Text, StyleSheet,TouchableOpacity, TextInput, Platform, SafeAreaView } from 'react-native';
 import styles from '../styles/styles';
-import {Agenda, Calendar} from 'react-native-calendars';
-import {Avatar, Card} from 'react-native-paper';
-import { color } from 'react-native-reanimated';
-import { black } from 'react-native-paper/lib/typescript/styles/colors';
+import {Agenda} from 'react-native-calendars';
 import { TopBar } from './TopBar';
+import {Colors} from 'react-native-paper';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
+
+type Item = {
+  userName: string;
+  success: string;
+  fail: string;
+  color: string;
+}
 
 const CalendarView = ({navigation} : {navigation:any}) => {
     //내가 푼 문제들만 calendar에 나타내면 성공
@@ -18,50 +23,54 @@ const CalendarView = ({navigation} : {navigation:any}) => {
     const [studyDay, setStudyday] = useState('');     //스터디 리셋 날짜
     const [userName, setUsername] = useState('');     //유저이름
     const [userPenalty, setUserpenalty] = useState(''); //유저벌금
-    const [proDate, setProdate] = useState([]);       //문제 풀이 한 날
-    const [userInfo, setUserinfo] = useState([]);     //유저 정보
-    const [aResult, setAresult] = useState({
-      'bj_id':[''],'user_color':[''],'user_nick':[''],'success':[''],'fail':['']
+
+    //agenda에서 사용
+    const [items, setItems] = useState<{[key: string]: Item[]}>({
+      '2021-11-29': [{userName: 'young', success: '2110', fail: '', color: '#a4c0b4'}, {userName: 'yungu', success: '', fail:'1020', color: '#e78f29'}],
+      '2021-11-30': [{userName: 'yungu', success: '', fail:'', color: '#e78f29'}],
     })
+
+    const renderItem = (item: Item) => {
+      const CircleW = 20
+      const CircleH = 20
+      let Color = item.color
+      // if (item.userName == 'yungu'){
+      //   Color = item.color
+      // }
+      // else if (item.userName == 'young'){
+      //   Color = item.color
+      // }
+      return(
+        <View style={{backgroundColor: 'lightgrey', borderRadius: 10}}>
+          <Text>{item.userName}</Text>
+          <Text>success: {item.success}</Text>
+          <Text>fail: {item.fail}</Text>
+          <View style={{width: CircleW, height: CircleH, borderRadius: CircleW/2, backgroundColor: Color}}><Text>J</Text></View>
+        </View>
+      )
+    }
+    
     const getStudyInfo = () => {
       fetch(`${API_URL}/study/info`, { //GET /경로 HTTP/1.1 Host:ApiServer(우리주소) Authorization:Bearer jwttoken 을 제출하는 oAuth방식
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json', 
-          },
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json', 
+        },
       })
       .then(async res => { //res를 가져옴
-          try {
-              const jsonRes = await res.json();
-              if (res.status === 200) {
-                  const {study,user,result,members,colors}=jsonRes; //members 가져올 수 있음
-        //[{'bj_id':'tlszn121','user_color':'#777777','user_nick':'아아','success':[[Array],[Array]],'fail':[['11047','2011-11-12T10:01:44.00Z']]}],  ['succes'][0]:문제번호, ['fail'][1]:시간
-        //[colors: 유저 컬러, members : 유저 닉, result: 문제번호들]
-                  console.log(result)
-                  setStudysolve(study['study_solve']);
-                  setStudyname(study['study_title']);
-                  setStudyday(study['study_day']);
-                  setUsername(user['user_nick']);
-                  setUserpenalty(user['user_penalty']);
-                  console.log("유저인포" + userInfo)
-                  for(let i in userInfo){
-                    console.log(i)
-                  }
-                  for(let i=0; i<result.length; i++){
-                    setUserinfo(result[i]);
-                    for (let j in userInfo){
-                      console.log("j??" + userInfo[j]);
-                    }
-                    if(result[i]['bj_id'] == bjId){
-                      setProdate(result[i]['success']);
-                      break;
-                    }
-                  } 
-                  [0,1].map((index)=>{result[index]['user_nick']})
-                  } 
-          } catch (err) {
-              console.log(err);
-          };
+        try {
+            const jsonRes = await res.json();
+            if (res.status === 200) {
+                const {study,user}=jsonRes; //members 가져올 수 있음
+                setStudysolve(study['study_solve']);
+                setStudyname(study['study_title']);
+                setStudyday(study['study_day']);
+                setUsername(user['user_nick']);
+                setUserpenalty(user['user_penalty']);               
+            } 
+        } catch (err) {
+            console.log(err);
+        };
       })
       .catch(err => {
           console.log(err);
@@ -70,25 +79,30 @@ const CalendarView = ({navigation} : {navigation:any}) => {
 
     useEffect(()=>getStudyInfo(),[])
 
-      return (
-        <SafeAreaView style={{flex:1}}>
-          <TopBar></TopBar>
-          <View style={{flexDirection: 'row'}}>
-          <Text>{userName}</Text>
-          <Text>{userPenalty}</Text>
-          </View>
-          
-          <Calendar style={styleCalendar.calendar} 
-            enableSwipeMonths
-            onDayPress={()=>(console.log())}
-            >
-          </Calendar>
-          {/*<Text>{proDate}</Text>*/}
-          {/*<Text>{userInfo}</Text>*/}
-          {/*<Text style={{color: 'black'}}>{studyName}</Text>*/}
-          {/*<Text style={{color: 'black'}}>{studySolve}</Text>*/}
-        </SafeAreaView>
-      );
+    return (
+      <SafeAreaView style={{flex:1}}>
+        <TopBar></TopBar>
+        <View>
+        <View><Text style={{fontWeight:'bold',fontSize:40,textAlign:'center'}}>{studyName}</Text></View>
+        <View><Text style={{color:Colors.grey200,fontSize:10,textAlign:'center'}}>{studySolve} problems a week, on {studyDay}</Text></View>
+        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+        <Text style={{fontWeight:'bold',fontSize:20,textAlign:'center'}}>{userName}</Text>
+        <Text style={{color:Colors.grey200,fontSize:10,textAlign:'center'}}>{userPenalty}</Text>
+        </View>
+        </View>
+        <Agenda
+          selected={'2021-11-25'}
+          items={items}
+          renderItem = {renderItem}
+          theme={{
+            agendaDayTextColor: 'yellow',
+            agendaDayNumColor: 'green',
+            agendaTodayColor: 'red',
+            agendaKnobColor: 'blue'
+          }}
+        />
+      </SafeAreaView>
+    );
 }
 
 export default CalendarView;

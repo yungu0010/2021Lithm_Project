@@ -16,8 +16,9 @@ const getStudy=async(req,res,next)=>{
         let result=[];
         await users.map((usr,index)=>{ //팀원별로 문제들 저장
             const bj_id=usr.bj_id;
-            crawl(bj_id,study.createdAt).then((problems)=>{
-                result.push(problems)
+            const problems=crawl(bj_id,study.createdAt).then((problems)=>{ //스터디 가입한 후 푼 문제번호 가져옴
+                let userProblems=Object.assign(usr,problems);
+                result.push(userProblems)
                 return index
             }).then((index)=>{
                 if (index==users.length-1){
@@ -60,10 +61,18 @@ const crawl=async(bj_id,createdAt)=>{
                     if(!success.includes(item.attribs.href.substr(9))){ //success에 문제가 없을 경우에만
                         fail.push([item.attribs.href.substr(9),time[index]])
                     }
+                    if(!fail.includes(item.attribs.href.substr(9))){ //fail에 문제가 없을 경우에만
+                        fail.push([item.attribs.href.substr(9),time[index]])
+                        
+                    }
                 }
             }
           });
-        return {success,fail}
+          let set = new Set(success);//중복 제거
+          let success_unique=[...set];
+          set=new Set(fail);
+          let fail_unique=[...set]
+          return {success:success_unique,fail:fail_unique}
     }
     catch(err){
         console.log(err);
