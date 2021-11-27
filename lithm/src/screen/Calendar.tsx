@@ -108,43 +108,10 @@ const CalendarView = ({navigation} : {navigation:any}) => {
 export default CalendarView;
 
 const styleCalendar = StyleSheet.create({
-    calendar: {
-      marginBottom: 10
-    },
-    switchContainer: {
-      flexDirection: 'row',
-      margin: 10,
-      alignItems: 'center'
-    },
-    switchText: {
-      margin: 10,
-      fontSize: 16
-    },
     text: {
       textAlign: 'center',
       padding: 10,
       backgroundColor: 'lightgrey',
       fontSize: 16
     },
-    disabledText: {
-      color: 'grey'
-    },
-    defaultText: {
-      color: 'purple'
-    },
-    customCalendar: {
-      height: 250,
-      borderBottomWidth: 1,
-      borderBottomColor: 'lightgrey'
-    },
-    customDay: {
-      textAlign: 'center'
-    },
-    customHeader: {
-      backgroundColor: '#FCC',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      marginHorizontal: -4,
-      padding: 8
-    }
   });
