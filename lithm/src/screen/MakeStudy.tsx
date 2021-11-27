@@ -1,6 +1,7 @@
 import React, {useState,useMemo} from "react";
 import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform } from "react-native";
 import NumericInput from 'react-native-numeric-input';
+import { Colors } from "react-native-paper";
 import SelectDropdown from 'react-native-select-dropdown'
 // import { widthNavigation } from 'react-navigation';
 import styles from '../styles/styles';
@@ -36,7 +37,6 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                     setIsError(true);
                     setMessage(jsonRes.message);
                 } else {
-                    //onMakeStudy();
                     setIsError(false);
                     setMessage(jsonRes.message);
                 }
@@ -58,21 +58,38 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.heading}>Create a New Study</Text>
+            <View><Text style={[styles.heading,{marginTop:10, top:10}]}>Create a New</Text>
+            <Text style={[styles.heading,{top:10}]}>Study</Text>
+            </View>
             <View style={styles.card}>
                 
                 <View style={styles.form}>
-                    <View style={styles.inputs}>
+                    <View style={styles.inputs}>   
+                        <View style={styles.title}><Text style={MakeStudystyle.text}>Title</Text></View>
                         <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle}/>
                         
+                        <View style={styles.title}><Text style={MakeStudystyle.text}>Rules</Text></View>
+                        <View style={{left:10,margin:'5%',paddingLeft:'5%',paddingRight:'5%'}}>
                         <View style={{flexDirection: 'row' ,margin: '5%'}}>
-                        <Text>Rules</Text>
-                        <Text>Solve </Text><NumericInput rounded value={solve} onChange={setSolve} /><Text> problems a week</Text>
+                        <Text style={styles.leftText}>Solve  </Text><NumericInput rounded value={solve} onChange={setSolve}
+                        textColor='#0078FF'
+                        minValue={1}
+                        maxValue={7}
+                        iconSize={10}
+                        totalWidth={50}
+                        totalHeight={40}
+                        type='up-down'
+                        /><Text style={styles.leftText}>  problems a week</Text>
                         </View>
 
                         <View  style={{flexDirection: 'row' ,margin: '5%'}}>
-                        <Text>Deadline    every </Text>
+                        <Text style={styles.leftText}>Deadline    every  </Text>
                         <SelectDropdown
+                            defaultButtonText={'Sunday'}
+                            buttonStyle={{height:40, width:130,        padding:0,
+                            bottom:10,
+                            borderRadius:3,
+                            backgroundColor:'whitesmoke'}}
                         	data={date}
                         	onSelect={(selectedItem, index) => setDay(selectedItem)}
                             buttonTextAfterSelection={(selectedItem, index) => {
@@ -85,10 +102,10 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                         </View>
 
                         <View style={{flexDirection: 'row' ,margin: '5%'}}>
-                        <Text>Penalty    </Text><TextInput style={styles.input} placeholder="1000" onChangeText={(value)=>{const newvalue=parseInt(value);setPenalty(newvalue)}} keyboardType="numeric"/><Text> won</Text>
+                        <Text style={styles.leftText}>Penalty    </Text><TextInput style={[styles.inputBorder,{width:80}]} placeholder="1000" onChangeText={(value)=>{const newvalue=parseInt(value);setPenalty(newvalue)}} keyboardType="numeric"/><Text style={styles.leftText}> ￦</Text>
+                        </View>
                         <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{message ? getMessage() : null}</Text>
                         </View>
-
                         <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
                             <Text style={styles.buttonText}>Submit</Text>
                         </TouchableOpacity>
@@ -99,5 +116,11 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
         </SafeAreaView>
     );
 }
+const MakeStudystyle = StyleSheet.create({
+   text:{
+       fontSize:20,
+       fontWeight:'500'
+   }
+  });
 
 export default MakeStudy;

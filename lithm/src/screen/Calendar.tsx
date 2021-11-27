@@ -15,43 +15,54 @@ type Item = {
 }
 
 const CalendarView = ({navigation} : {navigation:any}) => {
-    //내가 푼 문제들만 calendar에 나타내면 성공
-    //내 색깔을 calendar에 표시해야하고, calendar 밑 view에는 내가 푼 문제들 번호 나타내기turn status + message;
-    ///const [study_ti,ㅎㅁㅅ]=use
     const [studyName, setStudyname] = useState('');   //스터디명
     const [studySolve, setStudysolve] = useState(''); //스터디 문제풀이 규칙
     const [studyDay, setStudyday] = useState('');     //스터디 리셋 날짜
     const [userName, setUsername] = useState('');     //유저이름
     const [userPenalty, setUserpenalty] = useState(''); //유저벌금
+    const [userColor,setUsercolor]=useState(''); //유저색상
 
     //agenda에서 사용
     const [items, setItems] = useState<{[key: string]: Item[]}>({
-      '2021-11-29': [{userName: 'young', success: '2110', fail: '', color: '#a4c0b4'}, {userName: 'yungu', success: '', fail:'1020', color: '#e78f29'}],
-      '2021-11-30': [{userName: 'yungu', success: '', fail:'', color: '#e78f29'}],
+      '2021-11-29': [{userName: 'Choi', success: '2110', fail: '14439', color: '#a4c0b4'}, {userName: 'YoonDol', success: '2439', fail:'', color: '#e78f29'}],
+      '2021-11-30': [{userName: 'YoonDol', success: '1020', fail:'', color: '#e78f29'}],
     })
 
     const renderItem = (item: Item) => {
-      const CircleW = 20
-      const CircleH = 20
-      let Color = item.color
-      // if (item.userName == 'yungu'){
-      //   Color = item.color
-      // }
-      // else if (item.userName == 'young'){
-      //   Color = item.color
-      // }
-      return(
-        <View style={{backgroundColor: 'lightgrey', borderRadius: 10}}>
-          <Text>{item.userName}</Text>
-          <Text>success: {item.success}</Text>
-          <Text>fail: {item.fail}</Text>
-          <View style={{width: CircleW, height: CircleH, borderRadius: CircleW/2, backgroundColor: Color}}><Text>J</Text></View>
-        </View>
-      )
+      let Color = item.color;
+      if(item.success&& item.fail){ //둘 다 존재
+        return(
+          <View style={{top:10,padding:10}}>
+            <View style={{borderColor:Color, borderRadius:7,borderWidth:3, maxWidth:100, paddingBottom:3, backgroundColor:'white'}}><Text style={[Calendarstyle.nameStyle]}>{item.userName}</Text></View>
+            <View style={{flexDirection:'row'}}>
+              <Text style={[{color:'black',paddingBottom:0},Calendarstyle.problemStyle]}>{item.success} </Text>
+              <Text style={[{color:'#0078FF',paddingBottom:0},Calendarstyle.problemStyle]}>Success</Text>
+            </View>
+            <View style={{flexDirection:'row'}}>
+              <Text style={[{color:'black'},Calendarstyle.problemStyle]}>{item.fail} </Text>
+              <Text style={[{color:'#CD1F48'},Calendarstyle.problemStyle]}>Fail</Text>
+            </View>
+            
+          </View>
+        )
+
+      }
+      else if (item.success){ //성공만 존재
+        return(
+          <View style={{padding:10, top:10}}>
+            <View style={{borderColor:Color, borderRadius:7,borderWidth:3, maxWidth:100, paddingBottom:3,backgroundColor:'white'}}><Text style={[Calendarstyle.nameStyle]}>{item.userName}</Text></View>
+            <View style={{flexDirection:'row'}}>
+              <Text style={[{color:'black'},Calendarstyle.problemStyle]}>{item.success} </Text>
+              <Text style={[{color:'#0078FF'},Calendarstyle.problemStyle]}>Success</Text>
+            </View>
+          </View>
+        )
+      }
+     
     }
     
     const getStudyInfo = () => {
-      fetch(`${API_URL}/study/info`, { //GET /경로 HTTP/1.1 Host:ApiServer(우리주소) Authorization:Bearer jwttoken 을 제출하는 oAuth방식
+      fetch(`${API_URL}/study/info`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json', 
@@ -66,7 +77,8 @@ const CalendarView = ({navigation} : {navigation:any}) => {
                 setStudyname(study['study_title']);
                 setStudyday(study['study_day']);
                 setUsername(user['user_nick']);
-                setUserpenalty(user['user_penalty']);               
+                setUserpenalty(user['user_penalty']);           
+                setUsercolor(user['user_color']);    
             } 
         } catch (err) {
             console.log(err);
@@ -80,38 +92,48 @@ const CalendarView = ({navigation} : {navigation:any}) => {
     useEffect(()=>getStudyInfo(),[])
 
     return (
-      <SafeAreaView style={{flex:1}}>
+      <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
         <TopBar></TopBar>
         <View>
-        <View><Text style={{fontWeight:'bold',fontSize:40,textAlign:'center'}}>{studyName}</Text></View>
-        <View><Text style={{color:Colors.grey200,fontSize:10,textAlign:'center'}}>{studySolve} problems a week, on {studyDay}</Text></View>
-        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-        <Text style={{fontWeight:'bold',fontSize:20,textAlign:'center'}}>{userName}</Text>
-        <Text style={{color:Colors.grey200,fontSize:10,textAlign:'center'}}>{userPenalty}</Text>
+        <View><Text style={{fontWeight:'700',fontSize:35,color:"black",textAlign:'center'}}>{studyName}</Text></View>
+        <View><Text style={[Calendarstyle.description,{padding:5}]}>{`${studySolve} problems a week, on ${studyDay}`}</Text></View>
+        <View style={{top:15,flexDirection:'row',justifyContent:'space-between'}}>
+        <View style={{flexDirection:'row'}}>
+          <View style={{left:20, top:25, marginRight:20,width: 20, height: 20, borderRadius: 40, backgroundColor: userColor}}></View>
+          <Text style={{fontWeight:'700',fontSize:25,textAlign:'center',color:"black",padding:10,paddingTop:15}}>{userName}</Text>
+        </View>
+        <Text style={[Calendarstyle.description,{padding:10,paddingTop:20,paddingRight:20}]}>{`${userPenalty}￦`}</Text>
         </View>
         </View>
         <Agenda
-          selected={'2021-11-25'}
+          selected={'2021-11-28'}
           items={items}
           renderItem = {renderItem}
-          theme={{
-            agendaDayTextColor: 'yellow',
-            agendaDayNumColor: 'green',
-            agendaTodayColor: 'red',
-            agendaKnobColor: 'blue'
-          }}
+          style={{top:20}}
         />
+        <View style={{backgroundColor:'white'}}><Text style={[Calendarstyle.description,{padding:10,textAlign:'right',paddingRight:20}]}>1 problems left</Text></View>
       </SafeAreaView>
     );
 }
 
 export default CalendarView;
 
-const styleCalendar = StyleSheet.create({
-    text: {
-      textAlign: 'center',
-      padding: 10,
-      backgroundColor: 'lightgrey',
-      fontSize: 16
+const Calendarstyle = StyleSheet.create({
+    description: {
+      textAlign:'center',
+      fontSize:20, 
+      fontWeight:'500', 
+      color:Colors.grey500
+    },
+    nameStyle:{
+      color:'black',
+      textAlign:'center',
+      fontSize:16, 
+      fontWeight:'500'
+    },
+    problemStyle:{
+      padding:10, 
+      fontWeight:'bold',
+      paddingLeft:15
     },
   });

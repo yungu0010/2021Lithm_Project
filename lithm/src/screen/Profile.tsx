@@ -128,14 +128,14 @@ const Profile = ({navigation} : {navigation:any}) => {
             <Text>{penalty}</Text>
             </View>
               <Text>Progress</Text>
-              <Text>몇 개 중 몇 개</Text>
+              <Text>3개 중 1개</Text>
       </View>
       <View style={styles.menuWrapper}>
           <View style={styles.problems}>
-            <Text style={styles.problemText}>{success.map(s=><TouchableOpacity><Text>{s+"      "}</Text></TouchableOpacity>)}</Text>
+            <Text style={styles.problemText}>{success.map(s=><Text>{s+"      "}</Text>)}</Text>
           </View>
           <View style={styles.problems}>
-            <Text style={styles.problemText}>{fail.map(f=><TouchableOpacity><Text>{f+"      "}</Text></TouchableOpacity>)}</Text>
+            <Text style={styles.problemText}>{fail.map(f=><Text>{f+"      "}</Text>)}</Text>
           </View>
       </View>
     </SafeAreaView>
