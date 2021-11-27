@@ -1,20 +1,23 @@
 import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        // 추가
+        justifyContent: 'center'
     },
     image: {
         flex: 1,
         width: '100%',
         alignItems: 'center',
     },  
+    //Auth 수정
     card: {
         flex: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        width: '80%',
+        // backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        // width: '80%',
         marginTop: '40%',
-        marginVertical : '10%',
-        borderRadius: 20,
+        // marginVertical : '10%',
+        // borderRadius: 20,
         maxHeight: 380,
         paddingBottom: '30%',
     },
@@ -24,6 +27,12 @@ const styles = StyleSheet.create({
         marginLeft: '10%',
         marginTop: '5%',
         marginBottom: '30%',
+        color: 'black',
+    },
+    //추가
+    nostudy: {
+        fontSize: 18,
+        fontWeight: 'bold',
         color: 'black',
     },
     form: {
