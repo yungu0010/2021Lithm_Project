@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     //Auth 수정
     card: {
         flex: 1,
-        marginTop: '40%',
-        maxHeight: 380,
+        marginTop: '35%',
+        // maxHeight: 380,
         paddingBottom: '30%',
     },
     container1: {
@@ -35,6 +35,14 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '500',
         marginLeft: '10%',
+        color: 'black',
+    },
+    heading1: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginLeft: '10%',
+        marginTop: '5%',
+        marginBottom: '30%',
         color: 'black',
     },
     //추가

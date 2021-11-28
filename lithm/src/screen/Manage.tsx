@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NumericInput from 'react-native-numeric-input';
 import SelectDropdown from 'react-native-select-dropdown'
 import styles from '../styles/styles';
+import {TopBar} from './TopBar';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
@@ -106,11 +107,12 @@ const Manage = ({navigation} : {navigation:any}) => {
     
     return (
         <SafeAreaView>
+            <TopBar></TopBar>
             <Text>{studyName}</Text>
             <View style={{flexDirection:'row'}}>
                 <Icon name="account-group" color="#777777" size={20}/>
                 <Text>Mate</Text>
-                {member.map((mem)=><View><Text>{mem['user_nick']}</Text></View>)}
+                {member.map((mem, idx)=><View key={idx}><Text>{mem['user_nick']}</Text></View>)}
             </View>
             <View>
                 <TouchableOpacity onPress={()=>setPress(1)}>

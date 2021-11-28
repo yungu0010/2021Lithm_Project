@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageBackground, View, Text, StyleSheet,SafeAreaView, TouchableOpacity, TextInput, Platform } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet,SafeAreaView, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
 import NoStudy from './NoStudy';
 import MakeStudy from './MakeStudy';
 import CalendarView from './Calendar';
@@ -104,7 +104,7 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
 
     return(
     <View style={styles.card}>
-        <Text style={styles.heading}>{isLogin ? 'Log into \nYour account' : 'Signup'}</Text>
+        <Text style={styles.heading1}>{isLogin ? 'Log into \nYour account' : 'Signup'}</Text>
         <View style={styles.form}>
             <View style={styles.inputs}>
                 <TextInput style={styles.input} placeholder="Email" autoCapitalize="none" onChangeText={setEmail}></TextInput>

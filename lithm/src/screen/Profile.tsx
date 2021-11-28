@@ -1,7 +1,8 @@
 import React, {useState,useLayoutEffect} from 'react';
-import {View, SafeAreaView, StyleSheet, Image, TouchableOpacity,Platform, TextInput} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Image, TouchableOpacity,Platform, TextInput, ScrollView} from 'react-native';
 import { Title, Caption, Text} from 'react-native-paper';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import {TopBar} from './TopBar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
@@ -13,6 +14,7 @@ const Profile = ({navigation} : {navigation:any}) => {
   const [color,setColor]=useState('');
   const [title,setTitle]=useState('');
   const [email,setEmail]=useState('');
+  const [solve,setStudySolve]=useState('');
   const [count,setCount]=useState(0);
   const [penalty,setPenalty]=useState(0);
   const [success,setSuccess]=useState([]);
@@ -37,7 +39,7 @@ const Profile = ({navigation} : {navigation:any}) => {
     })
     .then((element)=>{
         u=element?.user; s=element?.study; c=element?.count; p=element?.problems;
-        setNick(u['user_nick']);setColor(u['user_color']);setTitle(s['study_title']);setEmail(u['user_email']);setCount(c);setPenalty(u['user_penalty']);setSuccess(p['success']);setFail(p['fail']);
+        setNick(u['user_nick']);setColor(u['user_color']);setTitle(s['study_title']);setEmail(u['user_email']);setCount(c);setPenalty(u['user_penalty']);setSuccess(p['success']);setFail(p['fail']);setStudySolve(s['study_solve']);
     })
     .catch(err => {
         console.log(err);
@@ -95,6 +97,7 @@ const Profile = ({navigation} : {navigation:any}) => {
   },[]);
   return (
     <SafeAreaView style={styles.container}>
+      <TopBar></TopBar>
       <View style={styles.userInfoSection}>
         <View style={{flexDirection: 'row', marginTop: 15}}>
           <View style={{backgroundColor:color}}></View>
@@ -128,14 +131,14 @@ const Profile = ({navigation} : {navigation:any}) => {
             <Text>{penalty}</Text>
             </View>
               <Text>Progress</Text>
-              <Text>3개 중 1개</Text>
+              <Text>{`${solve}개 중 1개`}</Text>
       </View>
       <View style={styles.menuWrapper}>
           <View style={styles.problems}>
-            <Text style={styles.problemText}>{success.map(s=><Text>{s+"      "}</Text>)}</Text>
+            <Text style={styles.problemText}>{success.map((s,idx)=><Text key={idx}>{s+"      "}</Text>)}</Text>
           </View>
           <View style={styles.problems}>
-            <Text style={styles.problemText}>{fail.map(f=><Text>{f+"      "}</Text>)}</Text>
+            <Text style={styles.problemText}>{fail.map((f,idx)=><Text key={idx}>{f+"      "}</Text>)}</Text>
           </View>
       </View>
     </SafeAreaView>

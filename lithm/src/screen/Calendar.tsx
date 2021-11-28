@@ -47,6 +47,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
         )
 
       }
+
       else if (item.success){ //성공만 존재
         return(
           <View style={{padding:10, top:10}}>
@@ -58,7 +59,6 @@ const CalendarView = ({navigation} : {navigation:any}) => {
           </View>
         )
       }
-     
     }
     
     const getStudyInfo = () => {
@@ -93,7 +93,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
 
     return (
       <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
-        <TopBar></TopBar>
+        <TouchableOpacity onPress={()=>{navigation.navigate('Profile')}}><Text>프로필</Text></TouchableOpacity>
         <View>
         <View><Text style={{fontWeight:'700',fontSize:35,color:"black",textAlign:'center'}}>{studyName}</Text></View>
         <View><Text style={[Calendarstyle.description,{padding:5}]}>{`${studySolve} problems a week, on ${studyDay}`}</Text></View>
@@ -110,6 +110,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
           items={items}
           renderItem = {renderItem}
           style={{top:20}}
+          renderEmptyData={()=>{return (<View><Text>아무도 문제를 풀지 않았습니다</Text></View>);}}
         />
         <View style={{backgroundColor:'white'}}><Text style={[Calendarstyle.description,{padding:10,textAlign:'right',paddingRight:20}]}>1 problems left</Text></View>
       </SafeAreaView>

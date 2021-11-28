@@ -1,9 +1,9 @@
 import React, {useState,useMemo} from "react";
-import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform } from "react-native";
+import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform, KeyboardAvoidingView } from "react-native";
 import NumericInput from 'react-native-numeric-input';
 import { Colors } from "react-native-paper";
-import SelectDropdown from 'react-native-select-dropdown'
-// import { widthNavigation } from 'react-navigation';
+import SelectDropdown from 'react-native-select-dropdown';
+import {TopBar} from './TopBar';
 import styles from '../styles/styles';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
@@ -57,7 +57,9 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
     const date = useMemo(()=>["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],[])
 
     return (
+    <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <SafeAreaView style={styles.container1}>
+            <TopBar></TopBar>
             <View><Text style={[styles.heading,{marginTop:10, top:10}]}>Create a New</Text>
             <Text style={[styles.heading,{top:10}]}>Study</Text>
             </View>
@@ -114,6 +116,7 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                 </View>
             </View>
         </SafeAreaView>
+    </KeyboardAvoidingView>
     );
 }
 const MakeStudystyle = StyleSheet.create({

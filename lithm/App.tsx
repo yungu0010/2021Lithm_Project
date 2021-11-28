@@ -24,7 +24,7 @@ export default class extends React.Component {
     if(this.state.isLoading){
       return <Loading></Loading>
     }else{
-      const Stack = createStackNavigator();    
+      const Stack = createStackNavigator();     //screenOptions={{headerShown: false}}
       return (
         <NavigationContainer>
           <SafeAreaView style={styles.safeAreaView}>
