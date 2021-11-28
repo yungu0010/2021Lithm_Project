@@ -4,6 +4,9 @@ import styles from '../styles/styles';
 import {Agenda} from 'react-native-calendars';
 import { TopBar } from './TopBar';
 import {Colors} from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import DrawerNavigator from './DrawerNavigator';
+
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
@@ -110,7 +113,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
           items={items}
           renderItem = {renderItem}
           style={{top:20}}
-          renderEmptyData={()=>{return (<View><Text>아무도 문제를 풀지 않았습니다</Text></View>);}}
+          renderEmptyData={()=>{return (<View style={[Calendarstyle.empty]}><Text style={[Calendarstyle.problemStyle]}>아무도 문제를 풀지 않았습니다</Text></View>);}}
         />
         <View style={{backgroundColor:'white'}}><Text style={[Calendarstyle.description,{padding:10,textAlign:'right',paddingRight:20}]}>1 problems left</Text></View>
       </SafeAreaView>
@@ -137,4 +140,8 @@ const Calendarstyle = StyleSheet.create({
       fontWeight:'bold',
       paddingLeft:15
     },
+    empty:{
+      padding:10,
+      justifyContent:'center',
+    }
   });

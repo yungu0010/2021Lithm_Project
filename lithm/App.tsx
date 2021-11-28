@@ -7,7 +7,8 @@ import MakeStudy from './src/screen/MakeStudy';
 import Profile from './src/screen/Profile';
 import CalendarView from './src/screen/Calendar';
 import Manage from './src/screen/Manage';
-
+import { AppearanceProvider } from 'react-native-appearance';
+import DrawerNavigator from './src/screen/DrawerNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
@@ -26,19 +27,22 @@ export default class extends React.Component {
     }else{
       const Stack = createStackNavigator();     //screenOptions={{headerShown: false}}
       return (
+
         <NavigationContainer>
           <SafeAreaView style={styles.safeAreaView}>
                 <Stack.Navigator initialRouteName="AuthScreen">
                   <Stack.Screen name="AuthScreen" component={AuthScreen}/>
                   <Stack.Screen name="NoStudy" component={NoStudy}/>
                   <Stack.Screen name="MakeStudy" component={MakeStudy}/>
-                  <Stack.Screen name="CalendarView" component={CalendarView}/>
+                  <Stack.Screen name="CalendarView"  component={CalendarView}/>
                   <Stack.Screen name="Profile" component={Profile}/>
                   <Stack.Screen name="Manage" component={Manage}/>
+                  <Stack.Screen name="DrawerNavigator" component={DrawerNavigator}/>
                 </Stack.Navigator>
               
           </SafeAreaView>
         </NavigationContainer>
+
         )
     }
 
