@@ -1,8 +1,10 @@
 const Study = require('../../models/study');
+const User=require('../../models/user');
 
 const makeStudy=async(req,res,next)=>{
     try {
         const {title,solve,day,penalty}=req.body;
+        if(!title) return res.status(400).json({message:"null title value"});
         const titleUnique=await Study.findOne({where:{study_title:title}});
         if(titleUnique) return res.status(409).json({message: "title already exists"});
         else{
@@ -17,7 +19,7 @@ const makeStudy=async(req,res,next)=>{
             });
             await newStudy.addUser(userId);
             await User.update({user_color:color},{where:{id:res.locals.userId}})
-            res.status(200).json({message: "user created"});        
+            res.status(200).json({message: "study created"});        
         }
     }catch(err){
         console.log(err);

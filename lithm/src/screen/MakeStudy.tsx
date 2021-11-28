@@ -1,5 +1,5 @@
 import React, {useState,useMemo} from "react";
-import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform, KeyboardAvoidingView } from "react-native";
+import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform, KeyboardAvoidingView, Alert } from "react-native";
 import NumericInput from 'react-native-numeric-input';
 import { Colors } from "react-native-paper";
 import SelectDropdown from 'react-native-select-dropdown';
@@ -36,9 +36,11 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                 if (res.status !== 200) {
                     setIsError(true);
                     setMessage(jsonRes.message);
+                    Alert.alert("Error","Study Title Error!")
                 } else {
                     setIsError(false);
                     setMessage(jsonRes.message);
+                    navigation.navigate('CalendarView');
                 }
             } catch (err) {
                 console.log(err);
@@ -65,10 +67,10 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
             </View>
             <View style={styles.card1}>
                 
-                <View style={styles.form}>
-                    <View style={styles.inputs}>   
+                <View style={styles.form1}>
+                    <View style={styles.inputs1}> 
                         <View style={styles.title}><Text style={MakeStudystyle.text}>Title</Text></View>
-                        <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle}/>
+                        <TextInput style={styles.input1} placeholder="Title" value={title} onChangeText={setTitle}/>
                         
                         <View style={styles.title}><Text style={MakeStudystyle.text}>Rules</Text></View>
                         <View style={{left:10,margin:'5%',paddingLeft:'5%',paddingRight:'5%'}}>
@@ -108,8 +110,8 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                         </View>
                         <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{message ? getMessage() : null}</Text>
                         </View>
-                        <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
-                            <Text style={styles.buttonText}>Submit</Text>
+                        <TouchableOpacity style={styles.button1} onPress={onSubmitHandler}>
+                            <Text style={styles.buttonText1}>Submit</Text>
                         </TouchableOpacity>
 
                     </View>    

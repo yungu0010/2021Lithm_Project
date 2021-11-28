@@ -1,7 +1,6 @@
 import React,{ useState } from "react";
 import { SafeAreaView, Text, View, Platform, TouchableOpacity} from "react-native";
 import styles from '../styles/styles';
-//import Ant from 'react-native-vector-icons/AntDesign'
 import Material from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 

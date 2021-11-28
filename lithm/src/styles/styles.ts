@@ -12,16 +12,57 @@ const styles = StyleSheet.create({
         // maxHeight: 380,
         paddingBottom: '30%',
     },
-    container1: {
+    heading: {
+        fontSize: 30,
+        fontWeight: '500',
+        marginLeft: '10%',
+        color: 'black',
+    },
+    form: {
         flex: 1,
-        backgroundColor:'white'
+        justifyContent: 'space-between',
+        paddingBottom: '5%',
+    },
+    inputs: {
+        width: '100%',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: '10%',
+    },  
+    input: {
+        width: '80%',
+        borderBottomWidth: 1,
+        borderBottomColor: 'black',
+        paddingTop: 10,
+        fontSize: 16, 
+        minHeight: 40,
+        color: 'black',
+    },
+    button: {
+        width: '80%',
+        backgroundColor: '#93cddd',
+        height: 40,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 5,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '400'
     },
     image: {
         flex: 1,
         width: '100%',
         alignItems: 'center',
     },  
-    //Auth 수정
+    //makestudy
+    container1: {
+        flex: 1,
+        backgroundColor:'white'
+    },
     card1: {
         flex: 1,
         padding:'2%',
@@ -31,13 +72,8 @@ const styles = StyleSheet.create({
         maxHeight: 380,
         paddingBottom: '30%',
     },
-    heading: {
-        fontSize: 30,
-        fontWeight: '500',
-        marginLeft: '10%',
-        color: 'black',
-    },
-    heading1: {
+
+    heading1: { 
         fontSize: 30,
         fontWeight: 'bold',
         marginLeft: '10%',
@@ -45,18 +81,12 @@ const styles = StyleSheet.create({
         marginBottom: '30%',
         color: 'black',
     },
-    //추가
-    nostudy: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    form: {
+    form1: {
         flex: 1,
         justifyContent: 'center',
         padding: '3%'
     },
-    inputs: {
+    inputs1: {
         width: '100%',
         flex: 1,
         alignItems: 'center',
@@ -74,7 +104,7 @@ const styles = StyleSheet.create({
         minHeight: 40,
         color: 'black',
     },
-    input: {
+    input1: {
         width: '90%',
         height:'22%',
         marginTop:10,
@@ -107,7 +137,7 @@ const styles = StyleSheet.create({
         padding:0,
         bottom:10
     },
-    button: {
+    button1: {
         width: '80%',
         backgroundColor: '#93cddd',
         height: 50,
@@ -116,10 +146,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom:5,
     },
-    buttonText: {
+    buttonText1: {
         color: 'white',
         fontSize:20,
         fontWeight: '500'
+    },
+    //nostudy
+    nostudy: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'black',
     },
     buttonAlt: {
         width: '80%',

@@ -1,17 +1,20 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import { Appearance, useColorScheme } from 'react-native-appearance';
-
+import {Text} from 'react-native';
 import Profile from './Profile';
 import Manage from './Manage';
+import AuthScreen from './AuthScreen';
+import StackNavigator from './Stack';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
     return (
-        <Drawer.Navigator>
+        <Drawer.Navigator screenOptions={{headerShown: false}}>
+            <Drawer.Screen name ="Home" component = {StackNavigator}/>
             <Drawer.Screen name ="Profile" component = {Profile}/>
             <Drawer.Screen name ="Manage" component = {Manage}/>
+            <Drawer.Screen name="Logout" component={AuthScreen}/>     
         </Drawer.Navigator>
     );
 }

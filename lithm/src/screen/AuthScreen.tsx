@@ -104,7 +104,7 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
 
     return(
     <View style={styles.card}>
-        <Text style={styles.heading1}>{isLogin ? 'Log into \nYour account' : 'Signup'}</Text>
+        <Text style={styles.heading}>{isLogin ? 'Log into \nYour account' : 'Signup'}</Text>
         <View style={styles.form}>
             <View style={styles.inputs}>
                 <TextInput style={styles.input} placeholder="Email" autoCapitalize="none" onChangeText={setEmail}></TextInput>

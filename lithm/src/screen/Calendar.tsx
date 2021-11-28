@@ -1,12 +1,8 @@
-import React, { useState ,useMemo, useLayoutEffect, useRef} from 'react';
+import React, { useState ,useMemo, useRef} from 'react';
 import { ImageBackground, View, Text, StyleSheet,TouchableOpacity, TextInput, Platform, SafeAreaView } from 'react-native';
 import styles from '../styles/styles';
 import {Agenda} from 'react-native-calendars';
-import { TopBar } from './TopBar';
 import {Colors} from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
-import DrawerNavigator from './DrawerNavigator';
-
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
@@ -24,7 +20,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
     const [userName, setUsername] = useState('');     //유저이름
     const [userPenalty, setUserpenalty] = useState(''); //유저벌금
     const [userColor,setUsercolor]=useState(''); //유저색상
-
+    const Circle=20;
     //agenda에서 사용
     const [items, setItems] = useState<{[key: string]: Item[]}>({
       '2021-11-29': [{userName: 'Choi', success: '2110', fail: '14439', color: '#a4c0b4'}, {userName: 'YoonDol', success: '2439', fail:'', color: '#e78f29'}],
@@ -92,17 +88,16 @@ const CalendarView = ({navigation} : {navigation:any}) => {
       });
     }
 
-    useLayoutEffect(()=>getStudyInfo(),[])
+    getStudyInfo();
 
     return (
       <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
-        <TouchableOpacity onPress={()=>{navigation.navigate('Profile')}}><Text>프로필</Text></TouchableOpacity>
         <View>
         <View><Text style={{fontWeight:'700',fontSize:35,color:"black",textAlign:'center'}}>{studyName}</Text></View>
         <View><Text style={[Calendarstyle.description,{padding:5}]}>{`${studySolve} problems a week, on ${studyDay}`}</Text></View>
         <View style={{top:15,flexDirection:'row',justifyContent:'space-between'}}>
         <View style={{flexDirection:'row'}}>
-          <View style={{left:20, top:25, marginRight:20,width: 20, height: 20, borderRadius: 30, backgroundColor: userColor}}></View>
+          <View style={{left:20, top:25, marginRight:20,width: Circle, height: Circle, borderRadius: Circle/2, backgroundColor: userColor}}></View>
           <Text style={{fontWeight:'700',fontSize:25,textAlign:'center',color:"black",padding:10,paddingTop:15}}>{userName}</Text>
         </View>
         <Text style={[Calendarstyle.description,{padding:10,paddingTop:20,paddingRight:20}]}>{`${userPenalty}￦`}</Text>
@@ -113,7 +108,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
           items={items}
           renderItem = {renderItem}
           style={{top:20}}
-          renderEmptyData={()=>{return (<View style={[Calendarstyle.empty]}><Text style={[Calendarstyle.problemStyle]}>아무도 문제를 풀지 않았습니다</Text></View>);}}
+          renderEmptyData={()=>{return (<View style={[Calendarstyle.empty]}><Text style={[Calendarstyle.textStyle]}>아무도 문제를 풀지 않았습니다</Text></View>);}}
         />
         <View style={{backgroundColor:'white'}}><Text style={[Calendarstyle.description,{padding:10,textAlign:'right',paddingRight:20}]}>1 problems left</Text></View>
       </SafeAreaView>
@@ -143,5 +138,11 @@ const Calendarstyle = StyleSheet.create({
     empty:{
       padding:10,
       justifyContent:'center',
-    }
+    },
+    textStyle:{
+      padding:10, 
+      fontWeight:'bold',
+      paddingLeft:15,
+      textAlign:'center'
+    },
   });

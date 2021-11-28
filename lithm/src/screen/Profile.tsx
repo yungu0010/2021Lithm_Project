@@ -1,4 +1,4 @@
-import React, {useState,useLayoutEffect} from 'react';
+import React, {useState,useLayoutEffect,useEffect} from 'react';
 import {View, SafeAreaView, StyleSheet, Image, TouchableOpacity,Platform, TextInput, ScrollView} from 'react-native';
 import { Title, Caption, Text} from 'react-native-paper';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
