@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useMemo} from 'react';
+import React, {useState,useLayoutEffect,useMemo} from 'react';
 import {SafeAreaView, Text, View, StyleSheet, TouchableOpacity,TextInput, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NumericInput from 'react-native-numeric-input';
@@ -43,7 +43,7 @@ const Manage = ({navigation} : {navigation:any}) => {
             console.log(err);
         });
       }
-    useEffect(() => { getStudyInfo();},[]);
+      useLayoutEffect(() => { getStudyInfo();},[]);
 
     const addMember = () => {
         const payload = {

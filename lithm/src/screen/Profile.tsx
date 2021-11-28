@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useLayoutEffect} from 'react';
 import {View, SafeAreaView, StyleSheet, Image, TouchableOpacity,Platform, TextInput} from 'react-native';
 import { Title, Caption, Text} from 'react-native-paper';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -90,7 +90,7 @@ const Profile = ({navigation} : {navigation:any}) => {
         console.log(err);
     });
  }
-  useEffect(() => {
+ useLayoutEffect(() => {
     getProfile();
   },[]);
   return (

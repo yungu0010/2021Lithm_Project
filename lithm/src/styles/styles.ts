@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },  
+    //Auth 수정
     card: {
         flex: 1,
         padding:'2%',
@@ -22,6 +23,12 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '500',
         marginLeft: '10%',
+        color: 'black',
+    },
+    //추가
+    nostudy: {
+        fontSize: 18,
+        fontWeight: 'bold',
         color: 'black',
     },
     form: {

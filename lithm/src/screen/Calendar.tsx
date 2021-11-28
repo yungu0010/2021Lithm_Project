@@ -1,4 +1,4 @@
-import React, { useState ,useMemo, useEffect, useRef} from 'react';
+import React, { useState ,useMemo, useLayoutEffect, useRef} from 'react';
 import { ImageBackground, View, Text, StyleSheet,TouchableOpacity, TextInput, Platform, SafeAreaView } from 'react-native';
 import styles from '../styles/styles';
 import {Agenda} from 'react-native-calendars';
@@ -89,7 +89,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
       });
     }
 
-    useEffect(()=>getStudyInfo(),[])
+    useLayoutEffect(()=>getStudyInfo(),[])
 
     return (
       <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
@@ -99,7 +99,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
         <View><Text style={[Calendarstyle.description,{padding:5}]}>{`${studySolve} problems a week, on ${studyDay}`}</Text></View>
         <View style={{top:15,flexDirection:'row',justifyContent:'space-between'}}>
         <View style={{flexDirection:'row'}}>
-          <View style={{left:20, top:25, marginRight:20,width: 20, height: 20, borderRadius: 40, backgroundColor: userColor}}></View>
+          <View style={{left:20, top:25, marginRight:20,width: 20, height: 20, borderRadius: 30, backgroundColor: userColor}}></View>
           <Text style={{fontWeight:'700',fontSize:25,textAlign:'center',color:"black",padding:10,paddingTop:15}}>{userName}</Text>
         </View>
         <Text style={[Calendarstyle.description,{padding:10,paddingTop:20,paddingRight:20}]}>{`${userPenalty}￦`}</Text>
