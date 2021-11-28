@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, ImageBackground } from "react-native";
 const Loading = () => {
     return (
         <ImageBackground
-        source={require('../img/loading_sample.png')}
+        source={require('../img/loading.jpg')}
         style={{flex:1}}>
         </ImageBackground>   
     );
