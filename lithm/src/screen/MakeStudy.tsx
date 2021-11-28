@@ -57,11 +57,11 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
     const date = useMemo(()=>["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],[])
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container1}>
             <View><Text style={[styles.heading,{marginTop:10, top:10}]}>Create a New</Text>
             <Text style={[styles.heading,{top:10}]}>Study</Text>
             </View>
-            <View style={styles.card}>
+            <View style={styles.card1}>
                 
                 <View style={styles.form}>
                     <View style={styles.inputs}>   

@@ -2,6 +2,18 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        // 추가
+        justifyContent: 'center'
+    },
+    //Auth 수정
+    card: {
+        flex: 1,
+        marginTop: '40%',
+        maxHeight: 380,
+        paddingBottom: '30%',
+    },
+    container1: {
+        flex: 1,
         backgroundColor:'white'
     },
     image: {
@@ -10,7 +22,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },  
     //Auth 수정
-    card: {
+    card1: {
         flex: 1,
         padding:'2%',
         marginTop: '35%',
