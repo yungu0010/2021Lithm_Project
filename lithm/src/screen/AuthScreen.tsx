@@ -100,7 +100,6 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
         return status + message;
     }
 
-  ;
 
     return(
     <View style={styles.card}>
