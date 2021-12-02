@@ -1,7 +1,7 @@
 import React, {useState,useLayoutEffect} from 'react';
 import {View, SafeAreaView, StyleSheet, TouchableOpacity,Platform, TextInput} from 'react-native';
 import { Title,  Text} from 'react-native-paper';
-import {TopBar} from './TopBar';
+import {TopBar} from '../navigate/TopBar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 

@@ -1,10 +1,10 @@
 import React from 'react';
 import {createStackNavigator } from '@react-navigation/stack';
 
-import AuthScreen from './AuthScreen';
-import NoStudy from './NoStudy';
-import MakeStudy from './MakeStudy';
-import CalendarView from './Calendar';
+import AuthScreen from '../screen/AuthScreen';
+import NoStudy from '../screen/NoStudy';
+import MakeStudy from '../screen/MakeStudy';
+import CalendarView from '../screen/Calendar';
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {

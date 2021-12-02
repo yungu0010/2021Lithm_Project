@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import { Alert , StyleSheet, SafeAreaView,View,Text} from 'react-native';
+import { StyleSheet } from 'react-native';
 import Loading from './src/screen/Loading';
 
-import DrawerNavigator from './src/screen/DrawerNavigator';
+import DrawerNavigator from './src/navigate/DrawerNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer} from '@react-navigation/native';
 

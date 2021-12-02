@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { ImageBackground, View, Text, StyleSheet,SafeAreaView, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
-import NoStudy from './NoStudy';
-import MakeStudy from './MakeStudy';
-import CalendarView from './Calendar';
+import { View, Text, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
+
 import styles from '../styles/styles';
 
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import Profile from './Profile';
-import Manage from './Manage';
-import AuthScreen from './AuthScreen';
+import Profile from '../screen/Profile';
+import Manage from '../screen/Manage';
+import AuthScreen from '../screen/AuthScreen';
 import StackNavigator from './Stack';
 import DrawerContent from './DrawerContent';
 
