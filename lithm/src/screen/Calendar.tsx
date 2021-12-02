@@ -1,6 +1,5 @@
 import React, { useState ,useMemo, useRef} from 'react';
-import { ImageBackground, View, Text, StyleSheet,TouchableOpacity, TextInput, Platform, SafeAreaView } from 'react-native';
-import styles from '../styles/styles';
+import { View, Text, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {Colors} from 'react-native-paper';
 

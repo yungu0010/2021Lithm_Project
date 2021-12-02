@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import {StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Switch, Platform} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Switch, Platform} from 'react-native';
 import type {FC} from 'react';
 import type {DrawerContentComponentProps} from '@react-navigation/drawer';
 import {DrawerContentScrollView} from '@react-navigation/drawer';

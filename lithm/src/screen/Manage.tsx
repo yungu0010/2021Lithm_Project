@@ -1,5 +1,5 @@
 import React, {useState,useLayoutEffect,useMemo} from 'react';
-import {SafeAreaView, Text, View, StyleSheet, TouchableOpacity,TextInput, Platform} from 'react-native';
+import {SafeAreaView, Text, View, StyleSheet, TouchableOpacity,TextInput, Platform, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NumericInput from 'react-native-numeric-input';
 import SelectDropdown from 'react-native-select-dropdown'
@@ -34,7 +34,7 @@ const Manage = ({navigation} : {navigation:any}) => {
                     setStudyname(study['study_title']);
                     setStudyday(study['study_day']);
                     setStudypenalty(study['study_penalty']);
-                    setMember(members)
+                    setMember(members);
                 }
             } catch (err) {
                 console.log(err);
@@ -61,7 +61,7 @@ const Manage = ({navigation} : {navigation:any}) => {
             try {
                 const jsonRes = await res.json();
                 if (res.status !== 200) {
-                    console.log(jsonRes.message)
+                    Alert.alert("Error",jsonRes.message);
                 } else { //성공적으로 멤버 추가
                     console.log(jsonRes.message)
                     getStudyInfo();
@@ -106,38 +106,63 @@ const Manage = ({navigation} : {navigation:any}) => {
     };
     
     return (
-        <SafeAreaView>
-            <TopBar></TopBar>
-            <Text>{studyName}</Text>
-            <View style={{flexDirection:'row'}}>
-                <Icon name="account-group" color="#777777" size={20}/>
-                <Text>Mate</Text>
-                {member.map((mem, idx)=><View key={idx}><Text>{mem['user_nick']}</Text></View>)}
-            </View>
-            <View>
-                <TouchableOpacity onPress={()=>setPress(1)}>
-                    <Icon name="clipboard-plus" color="black" size={20}/>
-                </TouchableOpacity>
-            </View>
-            {press?<View>
-                <TextInput placeholder='User Email' autoFocus={true} onChangeText={setEmail}></TextInput>
-                <TouchableOpacity onPress={addMember}><Text>AddUser</Text></TouchableOpacity>
+    <SafeAreaView style={styles.container1}>
+        <TopBar></TopBar>
+        <Text style={[Managestyle.title,{padding:10,paddingBottom:0}]}>{studyName}</Text>
+        <View style={{justifyContent:'center',marginLeft:20,marginRight:20,padding:10}}>
+            <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:20,marginBottom:0}}>
+                <View style={{flexDirection:'row'}}><Icon name="account-group" color="black" size={30}/>
+                    <Text style={{color:'black',fontSize:23,fontWeight:'500'}}>Mate</Text>
                 </View>
-            :<View></View>}
-
-            <View><TouchableOpacity onPress={()=>setUpdatePress(1)}><Text>Update Rules</Text></TouchableOpacity></View>
-            <View><Text>Rules</Text></View>
-            {!updatePress?
-            <View>
-                <Text>Solve       {studySolve} problems a week</Text>
-                <Text>Deadline        every {studyDay}</Text>
-                <Text>Penalty      {studyPenalty}</Text>
+                <View style={{flexDirection:'column',padding:0}}>
+                    <TouchableOpacity onPress={()=>setPress(1)}>
+                        <Icon name="account-plus" color="black" size={30}/>
+                    </TouchableOpacity>
+                    {press?
+                    <View style={{flexDirection:'row', justifyContent:'space-around',top:-20}}>
+                        <TextInput placeholder='User Email' autoFocus={true} onChangeText={setEmail} style={{fontSize:18}}/>
+                        <TouchableOpacity onPress={addMember} style={{padding:20}}><Icon name="check-circle-outline" color="#0078FF" size={26}/></TouchableOpacity>
+                    </View>
+                    :<View></View>}
+                </View>
             </View>
-            :<View>
-                <View><Text>Solve </Text><NumericInput rounded value={studySolve} onChange={setStudysolve} /><Text> problems a week</Text></View>
-                <View  style={{flexDirection: 'row' ,margin: '5%'}}>
-                <Text>Deadline    every </Text>
+            <View style={{flexDirection:'row',top:20,marginBottom:20}}>
+            {member.map((mem, idx)=>
+                <View key={idx} style={{paddingLeft:10,paddingRight:15,}}>
+                    <View style={{left:5,width:30,height:30,borderRadius:15,backgroundColor:mem['user_color']}}/>
+                    <Text style={{fontSize:16,color:'black',textAlign:'center'}}>{mem['user_nick']}</Text>
+                </View>)}
+            </View>
+        <View style={{backgroundColor:'white',marginTop:20,borderTopColor:'grey',borderTopWidth:1}}>
+            <View style={[{justifyContent:'space-between',flexDirection:'row'}]}>         
+                <View><Text style={[MakeStudystyle.text,{paddingTop:20}]}>Rules</Text></View>
+                <View style={{paddingTop:20}}><TouchableOpacity onPress={()=>setUpdatePress(1)}><Icon name="pencil" color="black" size={24}/></TouchableOpacity></View>
+            </View>
+            {!updatePress?
+            <View style={{margin:'5%',paddingLeft:'5%',paddingRight:'5%'}}>
+                <View style={{flexDirection: 'row' ,margin: '5%'}}><Text style={[Managestyle.text,{left:-20}]}>Solve     {studySolve}   problems a week</Text></View>
+                <View style={{flexDirection: 'row' ,margin: '5%'}}><Text style={[Managestyle.text,{left:-20}]}>Deadline      every     {studyDay}</Text></View>
+                <View style={{flexDirection: 'row' ,margin: '5%'}}><Text style={[Managestyle.text,{left:-20}]}>Penalty      {studyPenalty}  ￦</Text></View>
+            </View>
+            :<View style={{margin:'5%',paddingLeft:'5%',paddingRight:'5%'}}>
+                <View style={{flexDirection: 'row' ,margin: '5%'}}><Text style={[Managestyle.text,{left:-20}]}>Solve </Text><NumericInput rounded value={studySolve} onChange={setStudysolve} textColor='#0078FF'
+                minValue={1}
+                maxValue={7}
+                iconSize={10}
+                totalWidth={50}
+                totalHeight={40}
+                type='up-down'/><Text style={Managestyle.text}>  problems a week</Text></View>
+                <View style={{flexDirection: 'row' ,margin: '5%'}}>
+                <Text style={[Managestyle.text,{left:-20}]}>Deadline    every</Text>
                 <SelectDropdown
+                    defaultButtonText={studyDay}
+                    buttonStyle={{
+                        height:40, 
+                        width:130,
+                        padding:0,
+                        bottom:10,
+                        borderRadius:3,
+                        backgroundColor:'whitesmoke'}}
                     data={date}
                     onSelect={(selectedItem, index) => setStudyday(selectedItem)}
                     buttonTextAfterSelection={(selectedItem, index) => {
@@ -146,15 +171,37 @@ const Manage = ({navigation} : {navigation:any}) => {
                     rowTextForSelection={(item, index) => {return item}}
                 /></View>
                 <View style={{flexDirection: 'row' ,margin: '5%'}}>
-                <Text>Penalty    </Text><TextInput style={styles.input} value={String(studyPenalty)} onChangeText={(value)=>{const newvalue=parseInt(value);setStudypenalty(newvalue)}} keyboardType="numeric"/><Text> won</Text>
+                <Text style={[Managestyle.text,{left:-20}]}>Penalty    </Text><TextInput style={{color:'#0078FF',bottom:10}} value={String(studyPenalty)} onChangeText={(value)=>{const newvalue=parseInt(value);setStudypenalty(newvalue)}} keyboardType="numeric"/><Text style={Managestyle.text}> ￦</Text>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={updateRule}>
+                <TouchableOpacity style={[styles.button,{left:20}]} onPress={updateRule}>
                     <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
             </View>}
-            
+        </View></View>
         </SafeAreaView>
     );
 };
 
 export default Manage;
+
+const Managestyle = StyleSheet.create({
+    title: {
+      textAlign:'left',
+      left:20,
+      fontSize:26,
+      color:'black',
+    },
+    text:{
+      fontSize:16,
+      color:'black',
+      textAlign:'center',
+      fontWeight:'500',
+    }
+});
+const MakeStudystyle = StyleSheet.create({
+    text:{
+        fontSize:20,
+        fontWeight:'500',
+        color:'black'
+    }
+   });

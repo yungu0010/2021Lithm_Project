@@ -4,10 +4,7 @@ import {createStackNavigator } from '@react-navigation/stack';
 import AuthScreen from './AuthScreen';
 import NoStudy from './NoStudy';
 import MakeStudy from './MakeStudy';
-import Profile from './Profile';
 import CalendarView from './Calendar';
-import Manage from './Manage';
-import DrawerNavigator from './DrawerNavigator';
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {

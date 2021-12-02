@@ -1,6 +1,5 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Text} from 'react-native';
 import Profile from './Profile';
 import Manage from './Manage';
 import AuthScreen from './AuthScreen';

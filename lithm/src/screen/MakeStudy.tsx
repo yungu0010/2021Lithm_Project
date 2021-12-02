@@ -1,7 +1,6 @@
 import React, {useState,useMemo} from "react";
 import { SafeAreaView, StyleSheet, Text,TextInput, View, TouchableOpacity,Platform, KeyboardAvoidingView, Alert } from "react-native";
 import NumericInput from 'react-native-numeric-input';
-import { Colors } from "react-native-paper";
 import SelectDropdown from 'react-native-select-dropdown';
 import {TopBar} from './TopBar';
 import styles from '../styles/styles';
@@ -66,7 +65,6 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
             <Text style={[styles.heading,{top:10}]}>Study</Text>
             </View>
             <View style={styles.card1}>
-                
                 <View style={styles.form1}>
                     <View style={styles.inputs1}> 
                         <View style={styles.title}><Text style={MakeStudystyle.text}>Title</Text></View>
@@ -113,7 +111,6 @@ const MakeStudy = ({navigation} : {navigation:any}) => {
                         <TouchableOpacity style={styles.button1} onPress={onSubmitHandler}>
                             <Text style={styles.buttonText1}>Submit</Text>
                         </TouchableOpacity>
-
                     </View>    
                 </View>
             </View>

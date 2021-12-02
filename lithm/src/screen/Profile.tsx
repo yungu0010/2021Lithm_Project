@@ -1,7 +1,6 @@
-import React, {useState,useLayoutEffect,useEffect} from 'react';
-import {View, SafeAreaView, StyleSheet, Image, TouchableOpacity,Platform, TextInput, ScrollView} from 'react-native';
-import { Title, Caption, Text} from 'react-native-paper';
-import { createIconSetFromFontello } from 'react-native-vector-icons';
+import React, {useState,useLayoutEffect} from 'react';
+import {View, SafeAreaView, StyleSheet, TouchableOpacity,Platform, TextInput} from 'react-native';
+import { Title,  Text} from 'react-native-paper';
 import {TopBar} from './TopBar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 

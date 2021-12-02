@@ -1,5 +1,4 @@
 import React, {useCallback} from 'react';
-import type {FC} from 'react';
 import { StyleSheet, View ,Text} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
