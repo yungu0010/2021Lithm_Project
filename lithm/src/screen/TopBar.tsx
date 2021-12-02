@@ -13,7 +13,7 @@ export const TopBar = () => {
     return(
         <View style = {[styles.topbar]}>
             <TouchableOpacity onPress={goBack} style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text><Icons name="keyboard-backspace" size={24}></Icons></Text>
+                <Text><Icons name="chevron-left" size={50} /></Text>
             </TouchableOpacity>
         </View>
     );
