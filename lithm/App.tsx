@@ -1,34 +1,42 @@
-import React, {useEffect} from 'react';
-import { StyleSheet } from 'react-native';
+import React, {useEffect,useState,useCallback} from 'react';
 import Loading from './src/screen/Loading';
-
 import DrawerNavigator from './src/navigate/DrawerNavigator';
-import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer} from '@react-navigation/native';
+import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
+import {Provider as PaperProvider} from 'react-native-paper';
+import {DefaultTheme, DarkTheme} from 'react-native-paper';
+import {ToggleProvider} from './src/theme/ToggleThemeContext';
 
-export default class extends React.Component {
-  state={
-    isLoading:true
-  };
+const App = () => {
+  const scheme = useColorScheme(); //현재 휴대폰의 scheme알 수 있음
+  const [theme, setTheme] = useState(
+    //현재 휴대폰 scheme 따라 theme변경
+    scheme == 'dark' ? DarkTheme : DefaultTheme
+  );
+  const toggleTheme = useCallback(() => {
+    //theme.dark가 참이면 defaultTheme을 리턴. 아니면 darkTheme리턴
+    return setTheme(theme => (theme.dark ? DefaultTheme : DarkTheme));
+  }, []);
+  
+  const [loading, setLoading] = useState(true);
 
-  componentDidMount = async() => {
-    // 1000 = 1s
-    setTimeout(() => {this.setState({isLoading : false})}, 3000);
-  }
-  render(){
-    if(this.state.isLoading){
-      return <Loading></Loading>
-    }else{
-      const Stack = createStackNavigator();
-      return (
-        <NavigationContainer>
-          <DrawerNavigator/>
-        </NavigationContainer>
-        )
-    }
-  }
-};
+  useEffect(()=>{
+    setTimeout(()=>{
+      setLoading(false)
+    },1500)
+  },[]);
 
-const styles = StyleSheet.create({
-  safeAreaView: {flex: 1}
-})
+    return loading ? <Loading></Loading> : (
+      <AppearanceProvider>
+        <PaperProvider theme={theme}>
+          <ToggleProvider toggle={toggleTheme}>
+          <NavigationContainer>
+            <DrawerNavigator/>
+          </NavigationContainer>
+          </ToggleProvider>
+        </PaperProvider>
+      </AppearanceProvider>    
+    )
+
+}
+export default App;

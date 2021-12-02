@@ -176,5 +176,37 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginVertical: '5%',
     },
+        //Profile
+    profile: {
+        width: 40,
+        height: 40,
+        borderRadius: 40/2,
+        marginHorizontal: '5%',
+        marginTop: '5%'
+    },
+    heading_pro: { 
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginTop: '5%',
+        marginBottom: '5%',
+        color: 'black',
+    },
+    heading_study: { 
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: '5%',
+        marginBottom: '5%',
+        color: 'black',
+    },
+    profile_card: {
+        backgroundColor:'#dbeef4', 
+        padding: '5%', 
+        borderRadius:20, 
+        width: '100%',
+    },
+    flex: {
+        flexDirection: 'row', 
+        justifyContent:'space-between'
+    },
 });
 export default styles;
