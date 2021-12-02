@@ -45,11 +45,11 @@ const DrawerContent: FC<DrawerContentComponentProps> = (props) => {
     return(
         <DrawerContentScrollView {...props} contentContainerStyle = {styles.safe}>
             <View style={styles.content}>
-                <TouchableOpacity onPress={goHome}><Text>Home</Text></TouchableOpacity>
-                <TouchableOpacity onPress={goProfile}><Text>Profile</Text></TouchableOpacity>
-                <TouchableOpacity onPress={goManage}><Text>Manage</Text></TouchableOpacity>
-                <TouchableOpacity onPress={Logout}><Text>Logout</Text></TouchableOpacity>
-                <View><Switch value={true} onValueChange = {()=>{}}></Switch></View>
+                <TouchableOpacity onPress={goHome}><Text style={[styles.text,{color:'grey'}]}>Home</Text></TouchableOpacity>
+                <TouchableOpacity onPress={goProfile}><Text style={[styles.text,{color:'#0078FF'}]}>Profile</Text></TouchableOpacity>
+                <TouchableOpacity onPress={goManage}><Text style={[styles.text,{color:'#0078FF'}]}>Manage</Text></TouchableOpacity>
+                <TouchableOpacity onPress={Logout}><Text style={[styles.text,{color:'#0078FF'}]}>Logout</Text></TouchableOpacity>
+                <View style={{padding:20}}><Switch trackColor={{ false: "whitesmoke", true: "#93cddd" }} thumbColor={"#0078FF"} value={true} onValueChange = {()=>{}}></Switch></View>
             </View>
 
         </DrawerContentScrollView>
@@ -58,7 +58,8 @@ const DrawerContent: FC<DrawerContentComponentProps> = (props) => {
 export default DrawerContent;
 
 const styles = StyleSheet.create({
-    safe: {flex:1},
-    text: {fontSize: 15},
-    content: {flex:1, alignItems: 'center', jutifyContent: 'center'}
+    safe: {flex:0.5},
+    text: {fontSize: 20,padding:10},
+    content: {flex:1, alignItems: 'flex-end', jutifyContent: 'center',marginEnd:20,padding:20},
+
 })
