@@ -128,8 +128,8 @@ const Manage = ({navigation} : {navigation:any}) => {
             </View>
             <View style={{flexDirection:'row',top:20,marginBottom:20}}>
             {member.map((mem, idx)=>
-                <View key={idx} style={{paddingLeft:10,paddingRight:15,}}>
-                    <View style={{left:5,width:30,height:30,borderRadius:15,backgroundColor:mem['user_color']}}/>
+                <View key={idx} style={{paddingLeft:10,paddingRight:10, margin:5}}>
+                    <View style={{padding:'1%', left:5,width:30,height:30,borderRadius:15,backgroundColor:mem['user_color']}}/>
                     <Text style={{fontSize:16,color:'black',textAlign:'center'}}>{mem['user_nick']}</Text>
                 </View>)}
             </View>

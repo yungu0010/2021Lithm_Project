@@ -22,8 +22,8 @@ const CalendarView = ({navigation} : {navigation:any}) => {
     const Circle=20;
     //agenda에서 사용
     const [items, setItems] = useState<{[key: string]: Item[]}>({
-      '2021-11-29': [{userName: 'Choi', success: '2110', fail: '14439', color: '#a4c0b4'}, {userName: 'YoonDol', success: '2439', fail:'', color: '#e78f29'}],
-      '2021-11-30': [{userName: 'YoonDol', success: '1020', fail:'', color: '#e78f29'}],
+      '2021-12-08': [{userName: 'Choi', success: '2110', fail: '14439', color: '#a4c0b4'}, {userName: 'YoonDol', success: '2439', fail:'', color: '#e78f29'}],
+      '2021-12-10': [{userName: 'YoonDol', success: '1020', fail:'', color: '#e78f29'}],
     })
 
     const renderItem = (item: Item) => {
@@ -103,7 +103,7 @@ const CalendarView = ({navigation} : {navigation:any}) => {
         </View>
         </View>
         <Agenda
-          selected={'2021-11-28'}
+          selected={'2021-12-10'}
           items={items}
           renderItem = {renderItem}
           style={{top:20}}
