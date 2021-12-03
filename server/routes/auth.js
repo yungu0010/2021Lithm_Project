@@ -97,8 +97,7 @@ const isAuth = (req, res, next) => {//client로부터 받은 토큰 검증
 };
 const isAuthCookie = (req, res, next) => {//내가 누구인가
     try {
-    //console.log("여기야여이",req.headers.cookie); //dbUser=어쩌구; user=1
-    const userId=req.headers.cookie.split(';')[1].split('=')[1];
+    const userId=req.headers.cookie.split('=')[1];
 
     if (!userId) { //로그인x
         res.status(401).json({ message: 'unauthorized' });
@@ -111,14 +110,14 @@ const isAuthCookie = (req, res, next) => {//내가 누구인가
     };
 };
 
-const hasStudy = (req, res, next) => {//토큰 생성해서 client에게 보냄
+const hasStudy = (req, res, next) => {
     User.findOne({ where : { id: res.locals.userId}})
     .then(dbUser => {
         if (!dbUser) {
             return res.status(404).json({message: "user not found"});
         } else { //존재
             if(!dbUser.StudyId) return res.status(200).json({message:"nostudy"})
-            else return res.status(200).json({message:"makestudy"})
+            else return res.status(200).json({message:"calendar"})
         };
     })
     .catch(err => {

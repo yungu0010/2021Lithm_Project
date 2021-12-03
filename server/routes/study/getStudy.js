@@ -10,7 +10,6 @@ const getStudy=async(req,res,next)=>{
         const user=await User.findOne({where:{id:userId},attributes:['id','bj_id','user_nick','user_color','user_penalty','StudyId']}); //내 정보
         const studyId=user.StudyId;   
         const users=await User.findAll({ where:{studyId:studyId},attributes:['id','bj_id','user_nick','user_color'], raw: true}) //스터디 팀원들
-        const colors=await User.findAll({ where:{studyId:studyId},attributes:['user_color'], raw: true});
         const study=await Study.findOne({where:{id:studyId},attributes:['study_title','study_master','study_solve','study_day','study_penalty','createdAt']}); //스터디 정보
         const members=await User.findAll({ where:{studyId:studyId},attributes:['user_nick','user_color'], raw: true}) //스터디 팀원들
         let result=[];
