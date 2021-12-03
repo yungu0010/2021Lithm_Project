@@ -8,8 +8,6 @@ const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2
 
 let u,s,c,p;
 const Profile = ({navigation} : {navigation:any}) => {
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
   const [nick,setNick]=useState('');
   const [input,setInput]=useState(0);
   const [color,setColor]=useState('');
@@ -22,6 +20,7 @@ const Profile = ({navigation} : {navigation:any}) => {
   const [fail,setFail]=useState([]);
   const [bjID, setBjID]=useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [val,setVal]=useState('');
   const getProfile = () => {
     fetch(`${API_URL}/profile`, { 
         method: 'GET',
@@ -95,6 +94,7 @@ const Profile = ({navigation} : {navigation:any}) => {
         console.log(err);
     });
  }
+ 
  useLayoutEffect(() => {
     getProfile();
   },[]);
@@ -119,8 +119,8 @@ const Profile = ({navigation} : {navigation:any}) => {
                         <View style={[Modalstyles.centeredView]}>
                             <View style={[Modalstyles.modalView]}>
                             <View style={{alignSelf:'flex-end'}}><TouchableOpacity onPress={()=>{setModalVisible(!modalVisible);}}><Text style={{textAlign:'right',color:'black'}}>x</Text></TouchableOpacity></View>
-                            <TextInput style={Modalstyles.modalText} onChangeText={setNick} autoFocus={true}></TextInput>
-                            <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible);editNick();}} style={[Modalstyles.button, Modalstyles.buttonClose]}><Text style={Modalstyles.textStyle}>Submit</Text></TouchableOpacity>
+                            <TextInput style={Modalstyles.modalText} onChangeText={(val)=>setVal(val)} autoFocus={true}></TextInput>
+                            <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible);setNick(val);editNick();}} style={[Modalstyles.button, Modalstyles.buttonClose]}><Text style={Modalstyles.textStyle}>Submit</Text></TouchableOpacity>
                             </View>
                         </View>
                         </Modal></View>
