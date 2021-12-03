@@ -5,10 +5,13 @@ import NumericInput from 'react-native-numeric-input';
 import SelectDropdown from 'react-native-select-dropdown'
 import styles from '../styles/styles';
 import {TopBar} from '../navigate/TopBar';
+import { useSelector } from "react-redux";
+import type {AppState} from "../store";
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
 const Manage = ({navigation} : {navigation:any}) => {
+    const userEmail = useSelector<AppState, string>((state)=>state.email); //로그인한 사용자
     const [member,setMember]=useState([]);
     const [studyName, setStudyname] = useState('');
     const [studySolve, setStudysolve] = useState(0);
@@ -44,7 +47,7 @@ const Manage = ({navigation} : {navigation:any}) => {
             console.log(err);
         });
       }
-      useLayoutEffect(() => { getStudyInfo();},[]);
+    useLayoutEffect(() => { getStudyInfo()},[userEmail]);
 
     const addMember = () => {
         const payload = {

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text,TouchableOpacity, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
+import { useDispatch } from "react-redux";
+import { loginAction } from "../store";
 
 import styles from '../styles/styles';
 
@@ -7,6 +9,8 @@ import styles from '../styles/styles';
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
 const AuthScreen = ({navigation} : {navigation:any}) => {
+    const dispatch=useDispatch();
+
     const [email, setEmail] = useState('');
     const [name, setNick] = useState('');
     const [password, setPassword] = useState('');
@@ -48,6 +52,7 @@ const AuthScreen = ({navigation} : {navigation:any}) => {
                 const jsonRes = await res.json();   //headers, url, bodyUsed 등을 message 타입으로 변경   
                 if (res.status === 200) {  //Auth.js 에서 넘겨준 status
                     setMessage(jsonRes.message);
+                    dispatch(loginAction(email));
                     hasStudy();
                 }
             } catch (err) {

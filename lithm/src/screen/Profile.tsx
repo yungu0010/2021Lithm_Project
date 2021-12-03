@@ -3,6 +3,8 @@ import {View, Text,TextInput,StyleSheet,SafeAreaView, TouchableOpacity,Platform,
 import {TopBar} from '../navigate/TopBar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/styles';
+import { useSelector } from "react-redux";
+import type {AppState} from "../store";
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
 
@@ -20,7 +22,8 @@ const Profile = ({navigation} : {navigation:any}) => {
   const [fail,setFail]=useState([]);
   const [bjID, setBjID]=useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [val,setVal]=useState('');
+
+  const userEmail = useSelector<AppState, string>((state)=>state.email); //로그인한 사용자
   const getProfile = () => {
     fetch(`${API_URL}/profile`, { 
         method: 'GET',
@@ -97,7 +100,9 @@ const Profile = ({navigation} : {navigation:any}) => {
  
  useLayoutEffect(() => {
     getProfile();
-  },[]);
+  },[userEmail]);
+
+
   return (
     <SafeAreaView style={styles.container}>
       <TopBar></TopBar>
@@ -119,8 +124,8 @@ const Profile = ({navigation} : {navigation:any}) => {
                         <View style={[Modalstyles.centeredView]}>
                             <View style={[Modalstyles.modalView]}>
                             <View style={{alignSelf:'flex-end'}}><TouchableOpacity onPress={()=>{setModalVisible(!modalVisible);}}><Text style={{textAlign:'right',color:'black'}}>x</Text></TouchableOpacity></View>
-                            <TextInput style={Modalstyles.modalText} onChangeText={(val)=>setVal(val)} autoFocus={true}></TextInput>
-                            <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible);setNick(val);editNick();}} style={[Modalstyles.button, Modalstyles.buttonClose]}><Text style={Modalstyles.textStyle}>Submit</Text></TouchableOpacity>
+                            <TextInput style={Modalstyles.modalText} onChangeText={setNick} autoFocus={true}></TextInput>
+                            <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible);editNick();}} style={[Modalstyles.button, Modalstyles.buttonClose]}><Text style={Modalstyles.textStyle}>Submit</Text></TouchableOpacity>
                             </View>
                         </View>
                         </Modal></View>
@@ -142,7 +147,7 @@ const Profile = ({navigation} : {navigation:any}) => {
 
       </View>
       <View>
-          <Text style={styles.heading_study}>My Study</Text>
+          <Text style={[styles.heading_study, {color:'black'}]}>My Study</Text>
 
           <View style={styles.profile_card}>
                 <View style={[styles.flex, {marginBottom: 5}]}>
@@ -175,7 +180,7 @@ const Profile = ({navigation} : {navigation:any}) => {
             <Text style={{fontWeight: '700',fontSize: 17, color: '#0078FF'}}>success</Text><Text style={{fontSize:15, marginTop:'2%', color:'black'}}>{success.map((s,idx)=><Text key={idx}>{s+"      "}</Text>)}</Text>
           </View>
           <View style={{marginVertical: '2%'}}>
-            <Text style={{fontWeight: '700', fontSize: 17, color:'#CD1F48'}}>fail</Text><Text style={{fontSize:15, marginTop:'2%',color:'black'}}>{fail.map((f,idx)=><Text key={idx}>{f+"      "}</Text>)}</Text>
+            <Text style={{fontWeight: '700', fontSize: 17, color:'#CD1F48'}}>fail</Text><Text style={{fontSize:15, marginTop:'2%', color:'black'}}>{fail.map((f,idx)=><Text key={idx}>{f+"      "}</Text>)}</Text>
           </View>
       </View>
       </View>
