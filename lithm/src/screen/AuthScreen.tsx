@@ -6,7 +6,7 @@ import { loginAction } from "../store";
 import styles from '../styles/styles';
 
 
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
+const API_URL = 'http://3.36.52.76'; //배포 baseURL 
 
 const AuthScreen = ({navigation} : {navigation:any}) => {
     const dispatch=useDispatch();

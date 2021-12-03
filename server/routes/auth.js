@@ -97,8 +97,8 @@ const isAuth = (req, res, next) => {//client로부터 받은 토큰 검증
 };
 const isAuthCookie = (req, res, next) => {//내가 누구인가
     try {
-    const userId=req.headers.cookie.split('=')[1];
-
+    //const userId=req.headers.cookie.split('=')[1]; 배포일 때는 1
+    const userId=req.headers.cookie.split('=')[2]; //local일 때는 2
     if (!userId) { //로그인x
         res.status(401).json({ message: 'unauthorized' });
     } else { //로그인한 상태->userId 넘겨줌
@@ -125,4 +125,17 @@ const hasStudy = (req, res, next) => {
     });
 };
 
-module.exports = { signup, login, isAuth, isAuthCookie, logout,hasStudy };
+const hasStudymenu = (req, res, next) => { //회원가입 후 바로 study에 대한 api호출 방지
+    try {
+        User.findOne({ where : { id: res.locals.userId}})
+        .then(dbUser => {
+            if(!dbUser.StudyId) return res.status(400).json({message:"nostudy"})
+            else next();
+        }
+    )
+    }catch (err) {
+        return res.status(500).json({ message: err.message });
+    };
+};
+
+module.exports = { signup, login, isAuth, isAuthCookie, logout,hasStudy, hasStudymenu};

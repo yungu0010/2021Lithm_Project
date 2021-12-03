@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {Colors} from 'react-native-paper';
 
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000'; 
+const API_URL = 'http://3.36.52.76'; //배포 baseURL 
 
 type Item = {
   userName: string;
