@@ -3,7 +3,7 @@ import { SafeAreaView, Text, View, Platform, TouchableOpacity, Animated} from "r
 import styles from '../styles/styles';
 import Material from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const API_URL = 'http://3.36.52.76'; //배포 baseURL 
+const API_URL = 'http://15.164.245.226';//배포 baseURL 
 
 
 const FadeInView = ({children}:{children:any}) => {

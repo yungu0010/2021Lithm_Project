@@ -6,7 +6,7 @@ import styles from '../styles/styles';
 import { useSelector } from "react-redux";
 import type {AppState} from "../store";
 
-const API_URL = 'http://3.36.52.76'; //배포 baseURL 
+const API_URL = 'http://15.164.245.226';//배포 baseURL 
 
 let u,s,c,p;
 const Profile = ({navigation} : {navigation:any}) => {

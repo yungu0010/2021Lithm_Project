@@ -13,7 +13,7 @@ import { logoutAction } from "../store";
 const title = "DrawerContent";
 
 //const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000';
-const API_URL = 'http://3.36.52.76'; //배포 baseURL
+const API_URL = 'http://15.164.245.226';//배포 baseURL
 
 const DrawerContent: FC<DrawerContentComponentProps> = (props) => {
     const dispatch=useDispatch();

@@ -5,7 +5,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import {TopBar} from '../navigate/TopBar';
 import styles from '../styles/styles';
 
-const API_URL = 'http://3.36.52.76'; //배포 baseURL 
+const API_URL = 'http://15.164.245.226';//배포 baseURL 
 
 const MakeStudy = ({navigation} : {navigation:any}) => {
     const [isError, setIsError] = useState(false);
