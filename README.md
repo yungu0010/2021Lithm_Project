@@ -1,4 +1,4 @@
-# 2021Lithm_Project
+# 2021Rithm_Project
 Algorithm Study Management Mobile App with React-native &amp;&amp; Node.js 
 <img src="https://user-images.githubusercontent.com/68634112/146400381-c15d7272-11eb-45b3-8e84-bd58f6b7457f.png" width="600" height="600"/>
 <img src="https://user-images.githubusercontent.com/68634112/146400394-361fbdf1-d06c-47d7-8d86-1215809b82c4.jpg" width="400" height="600"/>
